@@ -95,12 +95,20 @@ use App\Compte;
                     Comme les attributs sont privés, il faut, pour pouvoir les lire et / ou les modifier, créer des méthodes particulières, nommées getter ( ou Assesseur, pour les lire) et setter (ou Mutateur, pour les modifier).
                 </p>
                 <?php 
-                $compte = new Compte('Duflot', 'Nicolas', 'CCP-987654', '0123456', 'MON RIB', 'MON IBAN FR', 2500, );
+                $compte = new Compte('Duflot', 'Nicolas', 'CCP-987654', '0123456', 'MON RIB', 'MON IBAN FR', 2500, '€', 400);
                 prePrint($compte);
                 prePrint($compte->getNom());
                 prePrint($compte->setNom('Doudou'));
                 $compte->modifierSolde(-52);
                 prePrint($compte->getSolde());
+
+                $compteDestinataire = new Compte('Dusse', 'Jean-claude', 'CCP-0123456', '987656', 'SON RIB', 'SON IBAN FR', 1500);
+                prePrint($compteDestinataire);
+
+                prePrint($compte->virement(3000, $compteDestinataire));
+
+                prePrint($compteDestinataire);
+                prePrint($compte);
                 ?>
                 <h2>Les classes statiques</h2>
                 <p>

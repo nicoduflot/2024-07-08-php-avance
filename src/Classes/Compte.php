@@ -11,6 +11,7 @@ class Compte{
     private $iban;
     private $solde;
     private $devise;
+    private $decouvert;
     
     /* 
     pour pouvoir utiliser la classe, créer une instance de la classe, il faut contruire l'objet 
@@ -23,11 +24,12 @@ class Compte{
      * @param string $nom - le nom du détenteur du compte
      * @param string $prenom - le prénom du détenteur du compte
      * @param string $numcompte - le numéro
-     * @param string $numagence
-     * @param string $rib
-     * @param string $iban
-     * @param float  $solde
-     * @param string $devise
+     * @param string $numagence - 
+     * @param string $rib - 
+     * @param string $iban - 
+     * @param float  $solde - 
+     * @param string $devise - 
+     * @param float  $decouvert - 
      */
     public function __construct(
         $nom,
@@ -37,7 +39,8 @@ class Compte{
         $rib,
         $iban,
         $solde = 0,
-        $devise = '€'
+        $devise = '€',
+        $decouvert = 0
         ){
         /* $this : dans cet objet que je crée */
         /* -> je cherche l'attribut ou la méthode nommé  */
@@ -51,6 +54,7 @@ class Compte{
         $this->iban = $iban;
         $this->solde = $solde;
         $this->devise = $devise;
+        $this->decouvert = $decouvert;
     }
 
     /* getters et setters */
@@ -217,9 +221,52 @@ class Compte{
         return $this;
     }
 
-    /* les méthodes propres à tous les type de compte */
-    public function modifierSolde($montant){
-        $this->solde = $this->solde + $montant;
+    /**
+     * Get the value of decouvert
+     */ 
+    public function getDecouvert()
+    {
+        return $this->decouvert;
     }
 
+    /**
+     * Set the value of decouvert
+     *
+     * @return  self
+     */ 
+    public function setDecouvert($decouvert)
+    {
+        $this->decouvert = $decouvert;
+
+        return $this;
+    }
+
+    /* les méthodes propres à tous les type de compte */
+    public function modifierSolde($montant){
+        //$this->solde = $this->solde + $montant;
+        $this->setSolde($this->getSolde() + $montant);
+    }
+
+    /**
+     * @param float $montant - montant positif et entier ou flottant de la transaction
+     * @param object $destinataire - objet instance de la classe Compte
+     */
+    public function virement($montant, Compte $destinataire){
+        $message = '';
+        if( (!is_float($montant) && !is_int($montant) ) && $montant <= 0 ){
+            $message = 'Le montant doit être un chiffre supérieur à 0';
+            return $message;
+        }
+        if( ($this->getSolde() - $montant) <= -($this->getDecouvert()) ){
+            $message = 'Votre virement dépasse votre découvert autorisé de '. $this->getDecouvert(). ' '.$this->getDevise().'.';
+            return $message;
+        }
+        $this->modifierSolde(-$montant);
+        $destinataire->modifierSolde($montant);
+        $message = 'Le compte n°'.$destinataire->getNumcompte(). ' a été crédité de '.$montant. ' ' .$this->getDevise() .'.';
+        return $message;
+    }
+
+
+    
 }
