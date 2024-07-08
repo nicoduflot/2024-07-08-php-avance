@@ -1,4 +1,16 @@
 <?php
+/* Pour appeler une classe sans utiliser un autoload */
+require './src/Classes/Compte.php';
+
+/* 
+il faut ensuite préciser que l'on utilise la classe compte
+Comme on a définit un espace de nom qui nous permet de classer 
+nos différentes classe, on indique la classe qui appartient à l'espace de nom.
+*/
+//include './src/includes/autoload.php';
+
+use App\Compte;
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -43,7 +55,7 @@
                     Un compte bancaire, aura par exemple :
                 </p>
                 <ul>
-                    <li>La civilité nom, prénom du détenteur</li>
+                    <li>La civilité : nom, prénom du détenteur</li>
                     <li>le solde</li>
                     <li>le numéro d'agence</li>
                     <li>Le rib</li>
@@ -82,6 +94,14 @@
                 <p>
                     Comme les attributs sont privés, il faut, pour pouvoir les lire et / ou les modifier, créer des méthodes particulières, nommées getter ( ou Assesseur, pour les lire) et setter (ou Mutateur, pour les modifier).
                 </p>
+                <?php 
+                $compte = new Compte('Duflot', 'Nicolas', 'CCP-987654', '0123456', 'MON RIB', 'MON IBAN FR', 2500, );
+                prePrint($compte);
+                prePrint($compte->getNom());
+                prePrint($compte->setNom('Doudou'));
+                $compte->modifierSolde(-52);
+                prePrint($compte->getSolde());
+                ?>
                 <h2>Les classes statiques</h2>
                 <p>
                     Se sont des classes, généralement sans constructeur, qui contiennent une série de méthodes que l'on peut invoquer sans avoir besoin de créer une instance de la classe.
