@@ -39,8 +39,8 @@ class Compte{
         $rib,
         $iban,
         $solde = 0,
-        $devise = '€',
-        $decouvert = 0
+        $decouvert = 0,
+        $devise = '€'
         ){
         /* $this : dans cet objet que je crée */
         /* -> je cherche l'attribut ou la méthode nommé  */
@@ -53,13 +53,11 @@ class Compte{
         $this->rib = $rib;
         $this->iban = $iban;
         $this->solde = $solde;
-        $this->devise = $devise;
         $this->decouvert = $decouvert;
+        $this->devise = $devise;
     }
 
     /* getters et setters */
-    
-
     /**
      * Get the value of nom
      * @return string
@@ -257,7 +255,7 @@ class Compte{
             $message = 'Le montant doit être un chiffre supérieur à 0';
             return $message;
         }
-        if( ($this->getSolde() - $montant) <= -($this->getDecouvert()) ){
+        if( ($this->getSolde() - $montant) < -($this->getDecouvert()) ){
             $message = 'Votre virement dépasse votre découvert autorisé de '. $this->getDecouvert(). ' '.$this->getDevise().'.';
             return $message;
         }
@@ -268,5 +266,30 @@ class Compte{
     }
 
 
-    
+    public function typeCompte() : string{
+        $className = get_class($this);
+        $nameSpace = __NAMESPACE__.'\\';
+        $className = str_replace($nameSpace, '', $className);
+        return $className;
+    }
+
+    /**
+     * @return string
+     */
+    public function infoCompte() : string {
+        $ficheCompte = '';
+        /* on utilise un ternaire pour définir l'état du solde créditeur ou débiteur */
+        $etatSolde = ( $this->getSolde() < 0 )? 'débiteur':'créditeur';
+        $ficheCompte = '
+        <div>
+            <div class="my-2"><b>'.$this->typeCompte().'</b></div>
+            <div class="my-2"><b>'.$this->getNom(). ' '. $this->getPrenom() .'</b></div>
+            <div class="my-2">Agence n°<b>'.$this->getNumagence().'</b></div>
+            <div class="my-2">RIB : <b>'.$this->getRib().'</b></div>
+            <div class="my-2">IBAN : <b>'.$this->getIban().'</b></div>
+            <div class="my-2">Compte : '. $etatSolde .' <b>' .$this->getSolde(). ' ' . $this->getDevise() . '</b></div>
+        </div>
+        ';
+        return $ficheCompte;
+    }
 }

@@ -1,7 +1,7 @@
 <?php
 /* Pour appeler une classe sans utiliser un autoload */
 require './src/Classes/Compte.php';
-
+require './src/Classes/Tools.php';
 /* 
 il faut ensuite préciser que l'on utilise la classe compte
 Comme on a définit un espace de nom qui nous permet de classer 
@@ -10,6 +10,7 @@ nos différentes classe, on indique la classe qui appartient à l'espace de nom.
 //include './src/includes/autoload.php';
 
 use App\Compte;
+use Utils\Tools;
 
 ?>
 <!DOCTYPE html>
@@ -95,7 +96,7 @@ use App\Compte;
                     Comme les attributs sont privés, il faut, pour pouvoir les lire et / ou les modifier, créer des méthodes particulières, nommées getter ( ou Assesseur, pour les lire) et setter (ou Mutateur, pour les modifier).
                 </p>
                 <?php 
-                $compte = new Compte('Duflot', 'Nicolas', 'CCP-987654', '0123456', 'MON RIB', 'MON IBAN FR', 2500, '€', 400);
+                $compte = new Compte('Duflot', 'Nicolas', 'CCP-987654', '0123456', 'MON RIB', 'MON IBAN FR', 2500, 400);
                 prePrint($compte);
                 prePrint($compte->getNom());
                 prePrint($compte->setNom('Doudou'));
@@ -105,10 +106,13 @@ use App\Compte;
                 $compteDestinataire = new Compte('Dusse', 'Jean-claude', 'CCP-0123456', '987656', 'SON RIB', 'SON IBAN FR', 1500);
                 prePrint($compteDestinataire);
 
-                prePrint($compte->virement(3000, $compteDestinataire));
+                prePrint($compte->virement(2500, $compteDestinataire));
 
                 prePrint($compteDestinataire);
                 prePrint($compte);
+
+                prePrint($compte->typeCompte());
+                echo $compte->infoCompte();
                 ?>
                 <h2>Les classes statiques</h2>
                 <p>
@@ -117,6 +121,13 @@ use App\Compte;
                 <p>
                     Il est d'ailleurs IMPOSSIBLE de créer une instance de classe si elle ne possèdent pas de constructeur
                 </p>
+                <?php
+                /* accès à un attribut static */
+                echo Tools::$pi.'<br />';
+
+                /* accès à une méthode statique */
+                Tools::prePrint(Tools::$pi);
+                ?>
             </article>
             <article>
                 <header>
@@ -124,11 +135,11 @@ use App\Compte;
                 </header>
                 <p>
                     La "vie" d'un objet est limité à l'éxécution de son script.
-                    Il est possible de donner des instruction à l'objet juste avant sa destruction.
+                    Il est possible de donner des instructions à l'objet juste avant sa destruction.
                 </p>
                 <p>
                     La méthode <code>__destruct(){}</code> se lance automatiquement quand un objet est détruit et s'éxécute juste avant sa déstruction complète. 
-                    Cela est utiles dans les cas suivant : enrgistrement des données de l'objet en BDD, en session
+                    Cela est utiles dans les cas suivant : enregistrement des données de l'objet en BDD, en session
                 </p>
             </article>
             <article>

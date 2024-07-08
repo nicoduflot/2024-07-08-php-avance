@@ -1,0 +1,14 @@
+{
+    "name": "nduflot/2024-07-08-php-avance",
+    "description": "Projet de travail formation php avancé",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Nicolas Duflot"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "twbs/bootstrap": "^5.3"
+    }
+}
