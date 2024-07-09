@@ -195,20 +195,44 @@ use Doctrine\Common\Collections\ArrayCollection;
                     </p>
                 </form>
                 <?php
+                /* variables pour créer les conditions de la requête de recherche */
+                $tabField = [];
+                $tabConditions = new ArrayCollection();
+                $conditions = '';
 
                 if( isset($_GET['soumettre']) && $_GET['soumettre'] === 'soumettre' ){
-                    Tools::prePrint($_GET);
+                    
+
                     if( isset($_GET['possesseur']) && $_GET['possesseur'] !== '' ){
-                        Tools::prePrint($_GET['possesseur']);
+                        $tabField['possesseur'] = $_GET['possesseur'];
+                        $tabConditions->add(' `possesseur` = :possesseur ');
                     }
 
                     if( isset($_GET['prixmax']) && $_GET['prixmax'] !== '' ){
-                        Tools::prePrint($_GET['prixmax']);
+                        $tabField['prixmax'] = $_GET['prixmax'];
+                        $tabConditions->add(' `prix` <= :prixmax ');
                     }
-                    
+
                     if( isset($_GET['console']) && $_GET['console'] !== '' ){
-                        Tools::prePrint($_GET['console']);
+                        $tabField['console'] = $_GET['console'];
+                        $tabConditions->add(' `console` = :console ');
                     }
+
+                    /* on cre un petit algo qui va permettre de gérer les conditions selon le ou les champs remplis du formulaire */
+                    if($tabConditions->count() > 0){
+                        for($i = 0; $i < $tabConditions->count(); $i++){
+                            $conditions .= (($i === 0)? ' WHERE ': ' AND ');
+                            $conditions .= $tabConditions[$i];
+                        }
+                    }
+
+                    $sql = 'SELECT * FROM `jeux_video` '.$conditions.' ORDER BY `nom`';
+
+                    echo $sql.'<br />'.print_r($tabField).'<br />';
+
+                    $req = $bdd->prepare($sql);
+                    $req->execute($tabField);
+
                 }
                 ?>
                 <div class="table-responsive" style="height: 300px;">
@@ -224,17 +248,28 @@ use Doctrine\Common\Collections\ArrayCollection;
                             </tr>
                         </thead>
                         <tbody>
+                            <?php
+                            while($donnees = $req->fetch(PDO::FETCH_ASSOC)){
+                            ?>
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td><?php echo $donnees['nom'] ?></td>
+                                    <td><?php echo $donnees['possesseur'] ?></td>
+                                    <td><?php echo $donnees['prix'] ?></td>
+                                    <td><?php echo $donnees['console'] ?></td>
+                                    <td><?php echo $donnees['nbre_joueurs_max'] ?></td>
+                                    <td><?php echo $donnees['commentaires'] ?></td>
+                                    
                                 </tr>
+                            <?php
+                            
+                            }
+                            ?>
                         </tbody>
                     </table>
                 </div>
+                <?php
+                $req->closeCursor();
+                ?>
             </article>
             <article class="col-lg-6">
                 <header>
