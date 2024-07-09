@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : lun. 13 mai 2024 à 10:01
+-- Généré le : mar. 09 juil. 2024 à 12:42
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.2.0
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `026-php-inter-poo`
+-- Base de données : `2024-07-08-php-avance`
 --
 
 -- --------------------------------------------------------
@@ -30,16 +30,16 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `jeux_video`;
 CREATE TABLE IF NOT EXISTS `jeux_video` (
   `ID` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `nom` varchar(255) NOT NULL,
-  `possesseur` varchar(255) NOT NULL,
-  `console` varchar(255) NOT NULL,
+  `nom` varchar(255) CHARACTER SET utf8mb3 NOT NULL,
+  `possesseur` varchar(255) CHARACTER SET utf8mb3 NOT NULL,
+  `console` varchar(255) CHARACTER SET utf8mb3 NOT NULL,
   `prix` double NOT NULL DEFAULT '0',
   `nbre_joueurs_max` int NOT NULL DEFAULT '0',
-  `commentaires` text NOT NULL,
+  `commentaires` text CHARACTER SET utf8mb3 NOT NULL,
   `date_ajout` datetime DEFAULT CURRENT_TIMESTAMP,
   `date_modif` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   KEY `ID` (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `jeux_video`

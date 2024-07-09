@@ -52,6 +52,16 @@ use Utils\Tools;
                     $bdd = new PDO("mysql:host=localhost;dbname=026-php-inter-poo;charset=UTF8", "root", "");
                 </code>
                 <h3>Tester la connexion</h3>
+                <?php
+                try{
+                    $bdd = new PDO('mysql:host=localhost;dbname=2024-07-08-php-avance;charset=UTF8', 'root', '', array(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION));
+                    echo '<p>La connexion fonctionne.</p>';
+                    Tools::prePrint($bdd);
+                }
+                catch(Exception $e){
+                    die('Erreur de connexion : ' . $e->getMessage());
+                }
+                ?>
             </article>
             <article>
                 <header>
@@ -63,6 +73,10 @@ use Utils\Tools;
                 <code>
                     $response = $bdd->query("SELECT * FROM `jeux_video`");
                 </code>
+                <?php
+                $response = $bdd->query("SELECT * FROM `jeux_video`");
+                Tools::prePrint($response);
+                ?>
                 <p>
                     $response contient désormais le jeu d'enregistrements récupéré via la requête.
                     On ne peut pas exploiter $response directement, il va falloir utliser les méthodes
@@ -74,6 +88,18 @@ use Utils\Tools;
                     $unEnregistrement = $response->fetch(PDO::FETCH_ASSOC);<br />
                     print_r($unEnregistrement);<br />
                 </code>
+                <?php
+                $unEnregistrement = $response->fetch(PDO::FETCH_ASSOC);
+                Tools::prePrint($unEnregistrement);
+                Tools::prePrint($unEnregistrement['nom']);
+                $unEnregistrement = $response->fetch(PDO::FETCH_BOTH);
+                Tools::prePrint($unEnregistrement);
+                Tools::prePrint($unEnregistrement['nom']);
+                Tools::prePrint($unEnregistrement[1]);
+                $unEnregistrement = $response->fetch(PDO::FETCH_NUM);
+                Tools::prePrint($unEnregistrement);
+                Tools::prePrint($unEnregistrement[1]);
+                ?>
                 <p>
                     fetch() renvoie l'enregistrement actuel où se trouve le curseur dans le jeu d'enregistrement.
                     Une fois qu'il a renvoyé les données, le curseur passe à l'enregistrement suivant.
@@ -84,6 +110,12 @@ use Utils\Tools;
                 <code>
                     $response->closeCursor();
                 </code>
+                <?php
+                $response->closeCursor();
+                $unEnregistrement = $response->fetch(PDO::FETCH_ASSOC);
+                Tools::prePrint($unEnregistrement);
+                Tools::prePrint($response);
+                ?>
             </article>
             <article>
                 <header>
