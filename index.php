@@ -1,13 +1,16 @@
 <?php
 /* Pour appeler une classe sans utiliser un autoload */
-require './src/Classes/Compte.php';
-require './src/Classes/Tools.php';
+//require './src/Classes/Compte.php';
+//require './src/Classes/Tools.php';
 /* 
 il faut ensuite préciser que l'on utilise la classe compte
 Comme on a définit un espace de nom qui nous permet de classer 
 nos différentes classe, on indique la classe qui appartient à l'espace de nom.
 */
 //include './src/includes/autoload.php';
+
+/* quand le fichier autoload est géré par composer, il suffit d'appelé le fichier généré qui se trouve dans le répéertoire vendor */
+require_once './vendor/autoload.php';
 
 use App\Compte;
 use Utils\Tools;
