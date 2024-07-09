@@ -1,6 +1,7 @@
 <?php
 require_once './vendor/autoload.php';
 use Utils\Tools;
+use Doctrine\Common\Collections\ArrayCollection;
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -125,6 +126,9 @@ use Utils\Tools;
                     Maintenant, on relance la requête et on va afficher les résultats
                     dans un tableau généré par une boucle
                 </p>
+                <?php
+                $response = $bdd->query("SELECT * FROM `jeux_video` ORDER BY `ID` DESC");
+                ?>
                 <div class="table-responsive" style="height: 300px;">
                     <table class="table table-dark table-striped">
                         <thead>
@@ -139,21 +143,31 @@ use Utils\Tools;
                             </tr>
                         </thead>
                         <tbody>
+                            <?php
+                            while($donnees = $response->fetch(PDO::FETCH_ASSOC)){
+                            ?>
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td><?php echo $donnees['nom'] ?></td>
+                                    <td><?php echo $donnees['possesseur'] ?></td>
+                                    <td><?php echo $donnees['prix'] ?></td>
+                                    <td><?php echo $donnees['console'] ?></td>
+                                    <td><?php echo $donnees['nbre_joueurs_max'] ?></td>
+                                    <td><?php echo $donnees['commentaires'] ?></td>
                                     <td style="width: 250px;">
-                                        <a href="./actionJV.php?action=mod&idJV="><button class="btn btn-primary">Modifier</button></a> 
-                                        <a href="./actionJV.php?action=sup&idJV="><button class="btn btn-danger">Supprimer</button></a>
+                                        <a href="./actionJV.php?action=mod&idJV=<?php echo $donnees['ID'] ?>"><button class="btn btn-primary">Modifier</button></a> 
+                                        <a href="./actionJV.php?action=sup&idJV=<?php echo $donnees['ID'] ?>"><button class="btn btn-danger">Supprimer</button></a>
                                     </td>
                                 </tr>
+                            <?php
+                            
+                            }
+                            ?>
                         </tbody>
                     </table>
                 </div>
+                <?php
+                $response->closeCursor();
+                ?>
             </article>
             <article class="col-lg-6">
                 <header>
@@ -180,6 +194,23 @@ use Utils\Tools;
                         <button class="btn btn-outline-primary" name="soumettre" type="submit" value="soumettre">Rechercher</button>
                     </p>
                 </form>
+                <?php
+
+                if( isset($_GET['soumettre']) && $_GET['soumettre'] === 'soumettre' ){
+                    Tools::prePrint($_GET);
+                    if( isset($_GET['possesseur']) && $_GET['possesseur'] !== '' ){
+                        Tools::prePrint($_GET['possesseur']);
+                    }
+
+                    if( isset($_GET['prixmax']) && $_GET['prixmax'] !== '' ){
+                        Tools::prePrint($_GET['prixmax']);
+                    }
+                    
+                    if( isset($_GET['console']) && $_GET['console'] !== '' ){
+                        Tools::prePrint($_GET['console']);
+                    }
+                }
+                ?>
                 <div class="table-responsive" style="height: 300px;">
                     <table class="table table-dark table-striped">
                         <thead>
@@ -220,7 +251,7 @@ use Utils\Tools;
                         <input type="text" class="form-control" name="possesseur" id="possesseur" />
                     </fieldset>
                     <fieldset class="form-group my-2">
-                        <label for="console" class="form-label">COnsole</label>
+                        <label for="console" class="form-label">Console</label>
                         <input type="text" class="form-control" name="console" id="console" />
                     </fieldset>
                     <fieldset class="form-group my-2">
