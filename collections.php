@@ -102,6 +102,81 @@ use Doctrine\Common\Collections\ArrayCollection;
                 }); // [2, 3, 4]
 
                 Tools::prePrint($mappedCollection2);
+
+                $numberlist = new ArrayCollection([1,2,3,4,5,6,7,8,9]);
+                Tools::prePrint($numberlist);
+
+                $numberOverThree = $numberlist->filter(function($element){
+                    return $element > 3;
+                });
+
+                Tools::prePrint($numberOverThree);
+
+                $pairList = $numberlist->filter(function($element){
+                    if($element % 2 === 0){
+                        return $element;
+                    }
+                });
+                
+                Tools::prePrint($pairList);
+
+                $partition = $numberlist->partition(function($key, $element){
+                    if($element % 3 === 0){
+                        return $element;
+                    }
+                });
+
+                Tools::prePrint($partition);
+                Tools::prePrint($partition[0]);
+                Tools::prePrint($partition[1]);
+
+                $tab1 = [1, 2, 3, 8];
+                $tab2 = [8, 9, 10];
+
+                $merge = array_merge($tab1, $tab2);
+
+                $merge = array_unique($merge);
+
+                //$merge = array_values($merge);
+
+                Tools::prePrint($merge);
+
+                $tabAsso = [
+                    1 => 'Nicolas Duflot',
+                    2 => 'toto',
+                    'Marou' => 'minou'
+                ];
+
+                Tools::prePrint($tabAsso);
+
+                $tabAssoCollec = new ArrayCollection($tabAsso);
+
+                Tools::prePrint($tabAssoCollec);
+                
+                $tabAssoCollec = new ArrayCollection($merge);
+                Tools::prePrint($tabAssoCollec);
+                
+                $toto = $tabAssoCollec->toArray();
+                tools::prePrint($toto);
+                
+                $toto = array_values($toto);
+                
+                $tabAssoCollec = new ArrayCollection($toto);
+                Tools::prePrint($tabAssoCollec);
+
+                $tabTest1 = [1, 2, 3, 4];
+                $tabTest2 =['titi' => 1, 2, 3, 4];
+
+                Tools::prePrint($tabTest1);
+                Tools::prePrint($tabTest2);
+                
+                $tabRecap = array_merge($tabTest1, $tabTest2);
+                Tools::prePrint($tabRecap);
+                
+                $tabRecap = array_values($tabRecap);
+                Tools::prePrint($tabRecap);
+                
+
                 ?>
             </article>
         </section>
