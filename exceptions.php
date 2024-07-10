@@ -54,7 +54,7 @@ use Utils\Tools;
                     Message : '. $e->getMessage() .'<br />
                     Code : '. $e->getCode() .'<br />
                     File : '. $e->getFile() .'<br />
-                    Tarce as string : '. $e->getTraceAsString() .'<br />
+                    Trace as string : '. $e->getTraceAsString() .'<br />
                     Previous : '. $e->getPrevious() .'
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
@@ -66,16 +66,14 @@ use Utils\Tools;
                     le reste du programme ne continue, ce qui génère des pages incomplètes.
                 </p>
                 <p>
-                </p>
-                <p>
                     Contrairement au premier exemple, le reste des instructions hors try s'exécutent normalement,
                     donc le reste de la page s'affiche.
                 </p>
                 <h4>Surcharger Exception : classe étendue personnelle</h4>
                 <p>
                     Comme Exception est une classe, il est donc possible de créer sa propre classe étendue d'Exception.
-                    En surchargeant les méthodes, on peut ne filtrer ou demander que ses propres exception.
-                    Pour, par exemple, n'avoir que getMessage() au retour d'une exception.
+                    En surchargeant les méthodes, on peut filtrer ou ne demander que ses propres exceptions.
+                    Par exemple, n'avoir que getMessage() au retour d'une exception.
                 </p>
                 <h4>Exception dans PDO</h4>
                 <p>
