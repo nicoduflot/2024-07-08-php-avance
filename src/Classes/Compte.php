@@ -12,6 +12,7 @@ class Compte{
     private $solde;
     private $devise;
     private $decouvert;
+    protected $toto;
     
     /* 
     pour pouvoir utiliser la classe, créer une instance de la classe, il faut contruire l'objet 
@@ -55,6 +56,7 @@ class Compte{
         $this->solde = $solde;
         $this->decouvert = $decouvert;
         $this->devise = $devise;
+        $this->toto = 'toto';
     }
 
     /* getters et setters */

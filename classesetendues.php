@@ -1,6 +1,7 @@
 <?php
 require_once './vendor/autoload.php';
 use Utils\Tools;
+use App\CompteCheque;
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -66,6 +67,15 @@ use Utils\Tools;
                     <h2>Compte Chèque</h2>
                 </header>
                 <?php
+                /* ici on testera le compte chèque */
+                $comptecheque = new CompteCheque('Duflot', 'Nicolas', 'CCP-987654', '0123456', 'MON RIB', 'MON IBAN FR', '1236 4569 7854 9654', '0123', 2500, 400);
+                Tools::prePrint($comptecheque);
+                $comptechequeAcme = new CompteCheque('ACME', '', 'CCP-78954', '9876541', 'ACME RIB', 'ACME IBAN US', '9874 6541 3210 7854', '9874', 1000000, 40000);
+                Tools::prePrint($comptechequeAcme);
+                $comptecheque->virement(250, $comptechequeAcme);
+                echo $comptecheque->infoCompte();
+                Tools::prePrint($comptecheque->getCarte()->getCodepin());
+                Tools::prePrint($comptecheque->getCarte()->getNumcarte());
                 ?>
             </article>
             <article class="col-lg-6">
