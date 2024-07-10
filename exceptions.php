@@ -116,7 +116,6 @@ use App\MonException;
                     </div>
                     ';
                 }
-
                 ?>
                 <h4>Exception dans PDO</h4>
                 <p>
@@ -127,6 +126,23 @@ use App\MonException;
                     composer require php-kit/ext-pdo
                 </code>
                 <p>
+                    <?php
+                    try{
+                        $testBdd = new PDO('mysql:host=localhost;dbname=2024-07-08-php-avance;charset=UTF-8', 'root', '');
+                    }catch(PDOException $e){
+                        echo '<div class="alert alert-warning alert-dismissible fade show">
+                    Une exception PDO a été lancée : <br />
+                    Message : '. $e->getMessage() .'<br />
+                    Line : '. $e->getLine() .'<br />
+                    Code : '. $e->getCode() .'<br />
+                    File : '. $e->getFile() .'<br />
+                    Trace as string : '. $e->getTraceAsString() .'<br />
+                    Previous : '. $e->getPrevious() .'
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    ';
+                    }
+                    ?>
                 </p>
             </article>
 
