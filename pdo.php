@@ -233,42 +233,43 @@ use Doctrine\Common\Collections\ArrayCollection;
                     $req = $bdd->prepare($sql);
                     $req->execute($tabField);
 
-                }
-                ?>
-                <div class="table-responsive" style="height: 300px;">
-                    <table class="table table-dark table-striped">
-                        <thead>
-                            <tr>
-                                <th>Jeu</th>
-                                <th>Possesseur</th>
-                                <th>Prix</th>
-                                <th>Console</th>
-                                <th>nb joueurs max</th>
-                                <th>Commentaire(s)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            while($donnees = $req->fetch(PDO::FETCH_ASSOC)){
-                            ?>
-                                <tr>
-                                    <td><?php echo $donnees['nom'] ?></td>
-                                    <td><?php echo $donnees['possesseur'] ?></td>
-                                    <td><?php echo $donnees['prix'] ?></td>
-                                    <td><?php echo $donnees['console'] ?></td>
-                                    <td><?php echo $donnees['nbre_joueurs_max'] ?></td>
-                                    <td><?php echo $donnees['commentaires'] ?></td>
+                
+                        ?>
+                        <div class="table-responsive" style="height: 300px;">
+                            <table class="table table-dark table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Jeu</th>
+                                        <th>Possesseur</th>
+                                        <th>Prix</th>
+                                        <th>Console</th>
+                                        <th>nb joueurs max</th>
+                                        <th>Commentaire(s)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    while($donnees = $req->fetch(PDO::FETCH_ASSOC)){
+                                    ?>
+                                        <tr>
+                                            <td><?php echo $donnees['nom'] ?></td>
+                                            <td><?php echo $donnees['possesseur'] ?></td>
+                                            <td><?php echo $donnees['prix'] ?></td>
+                                            <td><?php echo $donnees['console'] ?></td>
+                                            <td><?php echo $donnees['nbre_joueurs_max'] ?></td>
+                                            <td><?php echo $donnees['commentaires'] ?></td>
+                                            
+                                        </tr>
+                                    <?php
                                     
-                                </tr>
-                            <?php
-                            
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
-                <?php
-                $req->closeCursor();
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <?php
+                        $req->closeCursor();
+                        }
                 ?>
             </article>
             <article class="col-lg-6">
