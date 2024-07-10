@@ -305,7 +305,63 @@ use Doctrine\Common\Collections\ArrayCollection;
                 </form>
                 <?php
                 $tabField = [];
-                
+                Tools::prePrint($_POST);
+
+                /* Gestion des champs pour préparer la requête d'ajoût de données */
+                if( isset($_POST['ajoutJeu']) && $_POST['ajoutJeu'] === 'ajoutJeu' ){
+                    if( isset($_POST['nom']) && $_POST['nom'] !== '' ){
+                        $tabField['nom'] = $_POST['nom'];
+                    }
+
+                    if( isset($_POST['possesseur']) && $_POST['possesseur'] !== '' ){
+                        $tabField['possesseur'] = $_POST['possesseur'];
+                    }
+                    
+                    if( isset($_POST['console']) && $_POST['console'] !== '' ){
+                        $tabField['console'] = $_POST['console'];
+                    }
+
+                    if( isset($_POST['prix']) && $_POST['prix'] !== '' ){
+                        $tabField['prix'] = floatval($_POST['prix']);
+                    }
+                    
+                    if( isset($_POST['nbJmax']) && $_POST['nbJmax'] !== '' ){
+                        $tabField['nbre_joueurs_max'] = intval($_POST['nbJmax']);
+                    }
+                    
+                    if( isset($_POST['commentaires']) && $_POST['commentaires'] !== '' ){
+                        $tabField['commentaires'] = $_POST['commentaires'];
+                    }
+
+                    Tools::prePrint($tabField);
+
+                    $keys = '(';
+                    $values = '(';
+
+                    /* algo de création des clefs et valeurs de la requête */
+                    $i = 0;
+                    foreach($tabField as $key => $value){
+                        if($i !== 0){
+                            $keys .= ', ';
+                            $values .= ', ';
+                        }
+                        $i++;
+                        $keys .= $key;
+                        $values .= ':'.$key;
+                    }
+
+                    $keys .= ')';
+                    $values .= ')';
+                    $sql = 'INSERT INTO `jeux_video` '.$keys. ' VALUES '.$values. ';';
+                    Tools::prePrint($sql);
+                    $req = $bdd->prepare($sql);
+                    $req->execute($tabField) or die(Tools::prePrint($bdd->errorInfo()));
+                    ?>
+                    <script>
+                        document.location.href="./pdo.php";
+                    </script>
+                    <?php
+                }
                 ?>
             </article>
         </section>

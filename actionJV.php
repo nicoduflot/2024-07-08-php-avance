@@ -1,6 +1,13 @@
 <?php
 require_once './vendor/autoload.php';
 use Utils\Tools;
+$formMod = false;
+$formSup = false;
+if( isset($_GET['action']) && isset($_GET['idJV']) && $_GET['action'] !== '' && $_GET['idJV'] !== ''){
+    $idJV = $_GET['idJV'];
+    $formMod = ($_GET['action'] === 'mod');
+    $formSup = ($_GET['action'] === 'sup');
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -25,7 +32,7 @@ use Utils\Tools;
                 <header>
                     <h2>Gestion des jeux</h2>
                 </header>
-                
+                <?php if($formMod){ ?>
                     <h3>Modifier le jeu </h3>
                     <form method="post" action="./actionJV.php">
                         <input type="hidden" name="ID" value="" />
@@ -57,8 +64,11 @@ use Utils\Tools;
                             <button class="btn btn-outline-primary" name="modJeu" type="submit" value="modJeu">Modifier le jeu</button>
                         </p>
                     </form>
-                    
-                    <h3>Supprimer le jeu <?php echo $nom ?></h3>
+                <?php
+                }
+                if($formSup){
+                ?>    
+                    <h3>Supprimer le jeu </h3>
                     <form method="post" action="./actionJV.php">
                         <input type="hidden" name="ID" value="" />
                         Êtes-vous sûr de vouloir supprimer le jeu suivant : <b></b> ?
@@ -67,6 +77,9 @@ use Utils\Tools;
                             <a href="./pdo.php"><button class="btn btn-outline-secondary" type="button">Annuler</button></a>
                         </p>
                     </form>
+                <?php
+                }
+                ?>
             </article>
         </section>
     </main>
