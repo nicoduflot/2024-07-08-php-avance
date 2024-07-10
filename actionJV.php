@@ -23,31 +23,54 @@ if( isset($_GET['action']) && isset($_GET['idJV']) && $_GET['action'] !== '' && 
 }
 
 /* Cas modification du jeu */
-if( isset($_POST['modJeu']) && $_POST['modJeu'] === 'modJeu' ){
-    $sql = '
-    UPDATE `jeux_video`
-    SET 
-    `nom` = :nom,
-    `possesseur` = :possesseur,
-    `console` = :console,
-    `prix` = :prix,
-    `nbre_joueurs_max` = :nbre_joueurs_max,
-    `commentaires` = :commentaires,
-    `date_modif` = now() 
-    WHERE 
-    ID = :ID;
-    ';
-
-    $params = $_POST;
-    unset($params['modJeu']);
-    /*Tools::prePrint($params);*/
-
-    $req = $bdd->prepare($sql);
-    $req->execute($params)  or die(Tools::prePrint($bdd->errorInfo()));
-
-    header('location: ./pdo.php');
-
+$modBdd = false;
+/*
+if( isset($_POST['modBdd']) && $_POST['modBdd'] === 'modJeu' ){
+    
 }
+if( isset($_POST['modBdd']) && $_POST['modBdd'] === 'supJeu' ){
+    
+}
+*/
+if(isset($_POST['modBdd'])){
+    switch($_POST['modBdd']){
+        case 'modJeu':
+            $sql = '
+            UPDATE `jeux_video`
+            SET 
+            `nom` = :nom,
+            `possesseur` = :possesseur,
+            `console` = :console,
+            `prix` = :prix,
+            `nbre_joueurs_max` = :nbre_joueurs_max,
+            `commentaires` = :commentaires,
+            `date_modif` = now() 
+            WHERE 
+            ID = :ID;
+            ';
+            $modBdd = true;
+            break;
+        case 'supJeu':
+            $sql = '
+            DELETE FROM `jeux_video` 
+            WHERE ID = :ID;
+            ';
+            $modBdd = true;
+            break;
+        default:
+            $modBdd = false;
+    }
+}
+if($modBdd){
+    $params = $_POST;
+    unset($params['modBdd']); 
+    //Tools::prePrint($sql);
+    //Tools::prePrint($params);
+    $req = $bdd->prepare($sql);
+    $req->execute($params);
+    header('location: ./pdo.php');
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -101,7 +124,7 @@ if( isset($_POST['modJeu']) && $_POST['modJeu'] === 'modJeu' ){
                             <input type="text" class="form-control" name="commentaires" id="commentaires" value="<?php echo $commentaires ?>" />
                         </fieldset>
                         <p class="my-2">
-                            <button class="btn btn-outline-primary" name="modJeu" type="submit" value="modJeu">Modifier le jeu</button>
+                            <button class="btn btn-outline-primary" name="modBdd" type="submit" value="modJeu">Modifier le jeu</button>
                         </p>
                     </form>
                 <?php
@@ -111,9 +134,9 @@ if( isset($_POST['modJeu']) && $_POST['modJeu'] === 'modJeu' ){
                     <h3>Supprimer le jeu </h3>
                     <form method="post" action="./actionJV.php">
                         <input type="hidden" name="ID" value="<?php echo $id ?>" />
-                        Êtes-vous sûr de vouloir supprimer le jeu suivant : <b><?php $nom ?></b> ?
+                        Êtes-vous sûr de vouloir supprimer le jeu suivant : <b><?php echo $nom ?></b> ?
                         <p class="my-2">
-                            <button class="btn btn-outline-danger" name="supJeu" type="submit" value="supJeu">Supprimer le jeu</button>
+                            <button class="btn btn-outline-danger" name="modBdd" type="submit" value="supJeu">Supprimer le jeu</button>
                             <a href="./pdo.php"><button class="btn btn-outline-secondary" type="button">Annuler</button></a>
                         </p>
                     </form>
