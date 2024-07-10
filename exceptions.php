@@ -1,6 +1,7 @@
 <?php
 require_once './vendor/autoload.php';
 use Utils\Tools;
+use App\MonException;
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -75,6 +76,48 @@ use Utils\Tools;
                     En surchargeant les méthodes, on peut filtrer ou ne demander que ses propres exceptions.
                     Par exemple, n'avoir que getMessage() au retour d'une exception.
                 </p>
+                <?php
+                function multiplier2($x, $y){
+                    if( !is_numeric($x) || !is_numeric($y) ){
+                        throw new MonException('Les deux valeurs doivent être numériques');
+                    }
+
+                    if( func_num_args() > 2){
+                        throw new Exception('La fonction n\'admet que deux paramètres');
+                    }
+
+                    return $x * $y;
+                }
+
+                try{
+                    echo multiplier2(15, 12).'<br />';
+                    echo multiplier2("test", 23).'<br />';
+                    echo multiplier2(113, 42).'<br />';
+                }catch(MonException $e2){
+                    echo '<div class="alert alert-info alert-dismissible fade show">
+                    Une MonException a été lancée : <br />
+                    Message : '. $e2->getMessage() .'<br />
+                    Code : '. $e2->getCode() .'<br />
+                    File : '. $e2->getFile() .'<br />
+                    Trace as string : '. $e2->getTraceAsString() .'<br />
+                    Previous : '. $e2->getPrevious() .'
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    ';
+                }catch(Exception $e){
+                    echo '<div class="alert alert-danger alert-dismissible fade show">
+                    Une exception classique a été lancée : <br />
+                    Message : '. $e->getMessage() .'<br />
+                    Code : '. $e->getCode() .'<br />
+                    File : '. $e->getFile() .'<br />
+                    Trace as string : '. $e->getTraceAsString() .'<br />
+                    Previous : '. $e->getPrevious() .'
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    ';
+                }
+
+                ?>
                 <h4>Exception dans PDO</h4>
                 <p>
                     Il existe des exceptions pour PDO, mais elles ne sont pas natives dans Php, il faut
