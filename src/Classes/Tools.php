@@ -1,5 +1,7 @@
 <?php
 namespace Utils;
+use PDO;
+use Exception;
 
 /* Tools sera une classe statique : pas de constructeur => on ne créera pas d'instance de cette classe */
 
@@ -19,5 +21,16 @@ class Tools{
             echo 'active';
         }
     }
+
+    public static function setBdd($dbhost, $dbname, $user, $psw){
+        try{
+            $bdd = new PDO('mysql:host=' .$dbhost. ';dbname='.$dbname.';charset=UTF8', $user, $psw, array(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION));
+        }
+        catch(Exception $e){
+            die('Erreur de connexion : ' . $e->getMessage());
+        }
+        return $bdd;
+    }
+
 }
 
