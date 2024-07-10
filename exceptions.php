@@ -37,6 +37,30 @@ use Utils\Tools;
                     echo multiplier("test", 23);<br />
                     echo multiplier(113, 42);<br />
                 </code>
+                <?php
+                function multiplier($x, $y){
+                    if( !is_numeric($x) || !is_numeric($y) ){
+                        throw new Exception('Les deux valeurs doivent être numériques');
+                    }
+                    return $x * $y;
+                }
+                try{
+                    echo multiplier(20, 12).'<br />';
+                    echo multiplier("test", 23).'<br />';
+                    echo multiplier(113, 42).'<br />';
+                }catch(Exception $e){
+                    echo '<div class="alert alert-danger alert-dismissible fade show">
+                    Une exception a été lancée : <br />
+                    Message : '. $e->getMessage() .'<br />
+                    Code : '. $e->getCode() .'<br />
+                    File : '. $e->getFile() .'<br />
+                    Tarce as string : '. $e->getTraceAsString() .'<br />
+                    Previous : '. $e->getPrevious() .'
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    ';
+                }
+                ?>
                 <p>
                     Si on n'utilise pas de try-catch sur des expression lançant des Exceptions,
                     le reste du programme ne continue, ce qui génère des pages incomplètes.
