@@ -201,8 +201,6 @@ use Doctrine\Common\Collections\ArrayCollection;
                 $conditions = '';
 
                 if( isset($_GET['soumettre']) && $_GET['soumettre'] === 'soumettre' ){
-                    
-
                     if( isset($_GET['possesseur']) && $_GET['possesseur'] !== '' ){
                         $tabField['possesseur'] = $_GET['possesseur'];
                         $tabConditions->add(' `possesseur` = :possesseur ');
@@ -225,51 +223,50 @@ use Doctrine\Common\Collections\ArrayCollection;
                             $conditions .= $tabConditions[$i];
                         }
                     }
+                }
 
-                    $sql = 'SELECT * FROM `jeux_video` '.$conditions.' ORDER BY `nom`';
+                $sql = 'SELECT * FROM `jeux_video` '.$conditions.' ORDER BY `nom`';
 
-                    echo $sql.'<br />'.print_r($tabField).'<br />';
+                echo $sql.'<br />'.print_r($tabField).'<br />';
 
-                    $req = $bdd->prepare($sql);
-                    $req->execute($tabField);
+                $req = $bdd->prepare($sql);
+                $req->execute($tabField);
 
-                
-                        ?>
-                        <div class="table-responsive" style="height: 300px;">
-                            <table class="table table-dark table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Jeu</th>
-                                        <th>Possesseur</th>
-                                        <th>Prix</th>
-                                        <th>Console</th>
-                                        <th>nb joueurs max</th>
-                                        <th>Commentaire(s)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    while($donnees = $req->fetch(PDO::FETCH_ASSOC)){
-                                    ?>
-                                        <tr>
-                                            <td><?php echo $donnees['nom'] ?></td>
-                                            <td><?php echo $donnees['possesseur'] ?></td>
-                                            <td><?php echo $donnees['prix'] ?></td>
-                                            <td><?php echo $donnees['console'] ?></td>
-                                            <td><?php echo $donnees['nbre_joueurs_max'] ?></td>
-                                            <td><?php echo $donnees['commentaires'] ?></td>
-                                            
-                                        </tr>
-                                    <?php
+                ?>
+                <div class="table-responsive" style="height: 300px;">
+                    <table class="table table-dark table-striped">
+                        <thead>
+                            <tr>
+                                <th>Jeu</th>
+                                <th>Possesseur</th>
+                                <th>Prix</th>
+                                <th>Console</th>
+                                <th>nb joueurs max</th>
+                                <th>Commentaire(s)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            while($donnees = $req->fetch(PDO::FETCH_ASSOC)){
+                            ?>
+                                <tr>
+                                    <td><?php echo $donnees['nom'] ?></td>
+                                    <td><?php echo $donnees['possesseur'] ?></td>
+                                    <td><?php echo $donnees['prix'] ?></td>
+                                    <td><?php echo $donnees['console'] ?></td>
+                                    <td><?php echo $donnees['nbre_joueurs_max'] ?></td>
+                                    <td><?php echo $donnees['commentaires'] ?></td>
                                     
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
-                        <?php
-                        $req->closeCursor();
-                        }
+                                </tr>
+                            <?php
+                            
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+                <?php
+                $req->closeCursor();
                 ?>
             </article>
             <article class="col-lg-6">
@@ -306,6 +303,10 @@ use Doctrine\Common\Collections\ArrayCollection;
                         <button class="btn btn-outline-primary" name="ajoutJeu" type="submit" value="ajoutJeu">Ajouter le jeu</button>
                     </p>
                 </form>
+                <?php
+                $tabField = [];
+                
+                ?>
             </article>
         </section>
     </main>

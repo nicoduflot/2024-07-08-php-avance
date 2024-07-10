@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mar. 09 juil. 2024 à 12:42
+-- Généré le : mer. 10 juil. 2024 à 07:38
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.2.0
 
@@ -30,12 +30,12 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `jeux_video`;
 CREATE TABLE IF NOT EXISTS `jeux_video` (
   `ID` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `nom` varchar(255) CHARACTER SET utf8mb3 NOT NULL,
-  `possesseur` varchar(255) CHARACTER SET utf8mb3 NOT NULL,
-  `console` varchar(255) CHARACTER SET utf8mb3 NOT NULL,
-  `prix` double NOT NULL DEFAULT '0',
-  `nbre_joueurs_max` int NOT NULL DEFAULT '0',
-  `commentaires` text CHARACTER SET utf8mb3 NOT NULL,
+  `nom` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'No name',
+  `possesseur` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'John Doe',
+  `console` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'No console',
+  `prix` double DEFAULT '0',
+  `nbre_joueurs_max` int DEFAULT '0',
+  `commentaires` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `date_ajout` datetime DEFAULT CURRENT_TIMESTAMP,
   `date_modif` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   KEY `ID` (`ID`)
