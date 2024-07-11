@@ -130,7 +130,8 @@ use App\MonException;
                     try{
                         $testBdd = new PDO('mysql:host=localhost;dbname=2024-07-08-php-avance;charset=UTF-8', 'root', '');
                     }catch(PDOException $e){
-                        echo '<div class="alert alert-warning alert-dismissible fade show">
+                        echo '
+                        <div class="alert alert-warning alert-dismissible fade show">
                         Une exception PDO a été lancée : <br />
                         Message : '. $e->getMessage() .'<br />
                         Line : '. $e->getLine() .'<br />

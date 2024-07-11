@@ -2,6 +2,7 @@
 require_once './vendor/autoload.php';
 use Utils\Tools;
 use App\CompteCheque;
+use App\CompteInteret;
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -88,7 +89,11 @@ use App\CompteCheque;
                     <h2>Compte Intéret</h2>
                 </header>
                 <?php
-
+                /* ici on testera le compte intérêts */
+                $compteinteret = new CompteInteret('Duflot', 'Nicolas', 'CCP-987654', '0123456', 'MON RIB', 'MON IBAN FR', 2500, 'e0.015', 400);
+                Tools::prePrint($compteinteret);
+                Tools::prePrint($compteinteret->crediterinterets());
+                echo $compteinteret->infoCompte();
                 ?>
             </article>
         </section>

@@ -14,8 +14,8 @@ class CompteCheque extends Compte{
      * @param string $numcarte
      * @param string $codepin
      * @param float  $solde - 
-     * @param string $devise - 
      * @param float  $decouvert - 
+     * @param string $devise - 
      */
     public function __construct(
         $nom,
@@ -66,7 +66,7 @@ class CompteCheque extends Compte{
         }
     }
 
-    
+
 
 
 }

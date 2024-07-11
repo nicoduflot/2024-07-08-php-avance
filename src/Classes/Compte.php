@@ -11,7 +11,7 @@ class Compte{
     private $iban;
     private $solde;
     private $devise;
-    private $decouvert;
+    protected $decouvert;
     protected $toto;
     
     /* 
