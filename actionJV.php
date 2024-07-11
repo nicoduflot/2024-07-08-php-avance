@@ -3,14 +3,15 @@ require_once './vendor/autoload.php';
 use Utils\Tools;
 $formMod = false;
 $formSup = false;
-$bdd = Tools::setBdd('localhost', '2024-07-08-php-avance', 'root', '');
+//$bdd = Tools::setBdd();
 if( isset($_GET['action']) && isset($_GET['idJV']) && $_GET['action'] !== '' && $_GET['idJV'] !== ''){
     $idJV = $_GET['idJV'];
     $formMod = ($_GET['action'] === 'mod');
     $formSup = ($_GET['action'] === 'sup');
     $sql = 'SELECT * FROM `jeux_video` WHERE `ID` = :id';
-    $req = $bdd->prepare($sql);
-    $req->execute(['id' => $idJV]);
+    $req = Tools::modBdd($sql, ['id' => $idJV]);
+    //$req = $bdd->prepare($sql);
+    //$req->execute(['id' => $idJV]);
     $infosJeu = $req->fetch(PDO::FETCH_ASSOC);
     /*Tools::prePrint($infosJeu);*/
     $nom = $infosJeu['nom'];
@@ -66,8 +67,11 @@ if($modBdd){
     unset($params['modBdd']); 
     //Tools::prePrint($sql);
     //Tools::prePrint($params);
+    /*
     $req = $bdd->prepare($sql);
     $req->execute($params);
+    */
+    Tools::modBdd($sql, $params);
     header('location: ./pdo.php');
 }
 
