@@ -74,6 +74,11 @@ use App\CompteCheque;
                 Tools::prePrint($comptechequeAcme);
                 $comptecheque->virement(250, $comptechequeAcme);
                 echo $comptecheque->infoCompte();
+                /*
+                $carteCompteCheque = $comptecheque->getCarte();
+                Tools::prePrint($carteCompteCheque);
+                */
+                Tools::prePrint($comptecheque->getCarte());
                 Tools::prePrint($comptecheque->getCarte()->getCodepin());
                 Tools::prePrint($comptecheque->getCarte()->getNumcarte());
                 ?>

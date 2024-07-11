@@ -252,19 +252,21 @@ class Compte{
      * @param object $destinataire - objet instance de la classe Compte
      */
     public function virement($montant, Compte $destinataire){
-        $message = '';
         if( (!is_float($montant) && !is_int($montant) ) && $montant <= 0 ){
-            $message = 'Le montant doit être un chiffre supérieur à 0';
-            return $message;
+            echo '<p>Le montant doit être un chiffre supérieur à 0</p>
+            <br />Virement impossible vers le compte n°'.$destinataire->getNumcompte(). '.';
+            return false;
         }
-        if( ($this->getSolde() - $montant) < -($this->getDecouvert()) ){
-            $message = 'Votre virement dépasse votre découvert autorisé de '. $this->getDecouvert(). ' '.$this->getDevise().'.';
-            return $message;
+        if( ($this->getSolde() - $montant) - ($this->getDecouvert()) ){
+            echo '<p>Votre virement dépasse votre découvert autorisé de '. $this->getDecouvert(). ' '.$this->getDevise().'.</p>
+            <br />Virement impossible vers le compte n°'.$destinataire->getNumcompte(). '.';
+            return false;
         }
         $this->modifierSolde(-$montant);
         $destinataire->modifierSolde($montant);
-        $message = 'Le compte n°'.$destinataire->getNumcompte(). ' a été crédité de '.$montant. ' ' .$this->getDevise() .'.';
-        return $message;
+        echo 'Le compte n°'.$destinataire->getNumcompte(). ' a été crédité de '.$montant. ' ' .$this->getDevise() .'.';
+        /* Mise à jour du solde du compte dans la BDD */
+        return true;
     }
 
 
