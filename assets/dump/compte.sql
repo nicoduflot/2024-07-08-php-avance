@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : lun. 13 mai 2024 à 09:59
+-- Généré le : jeu. 11 juil. 2024 à 14:52
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.2.0
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `026-php-inter-poo`
+-- Base de données : `2024-07-08-php-avance`
 --
 
 -- --------------------------------------------------------
@@ -30,23 +30,32 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `compte`;
 CREATE TABLE IF NOT EXISTS `compte` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `uniqueid` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `typecompte` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nom` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `prenom` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `numcompte` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `numagence` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `rib` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `iban` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uniqueid` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `typecompte` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nom` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `prenom` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `numcompte` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `numagence` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rib` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `iban` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `solde` float NOT NULL,
-  `devise` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `devise` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `cardid` int DEFAULT NULL,
   `taux` float DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniqueid` (`uniqueid`),
   KEY `cardid` (`cardid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Contraintes pour les tables déchargées
+--
+
+--
+-- Contraintes pour la table `compte`
+--
+ALTER TABLE `compte`
+  ADD CONSTRAINT `compte_ibfk_1` FOREIGN KEY (`cardid`) REFERENCES `carte` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
