@@ -115,7 +115,7 @@ use Utils\Tools;
                 prePrint($compte);
 
                 prePrint($compte->typeCompte());
-                echo $compte->infoCompte();
+                echo $compte->ficheCompte();
                 ?>
                 <h2>Les classes statiques</h2>
                 <p>

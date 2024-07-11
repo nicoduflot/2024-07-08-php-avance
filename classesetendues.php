@@ -74,7 +74,7 @@ use App\CompteInteret;
                 $comptechequeAcme = new CompteCheque('ACME', '', 'CCP-78954', '9876541', 'ACME RIB', 'ACME IBAN US', '9874 6541 3210 7854', '9874', 1000000, 40000);
                 Tools::prePrint($comptechequeAcme);
                 $comptecheque->virement(250, $comptechequeAcme);
-                echo $comptecheque->infoCompte();
+                echo $comptecheque->ficheCompte();
                 /*
                 $carteCompteCheque = $comptecheque->getCarte();
                 Tools::prePrint($carteCompteCheque);
@@ -93,8 +93,12 @@ use App\CompteInteret;
                 $compteinteret = new CompteInteret('Duflot', 'Nicolas', 'CCP-987654', '0123456', 'MON RIB', 'MON IBAN FR', 2500, 'e0.015', 400);
                 Tools::prePrint($compteinteret);
                 Tools::prePrint($compteinteret->crediterinterets());
-                echo $compteinteret->infoCompte();
                 ?>
+                <div>
+                    <?php
+                    echo $compteinteret->ficheCompte();
+                    ?>
+                </div>
             </article>
         </section>
         <section>

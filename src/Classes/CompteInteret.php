@@ -55,8 +55,15 @@ class CompteInteret extends Compte
         if($this->getSolde() > 0){
             $interets = $this->getSolde()*$this->getTaux();
             $this->modifierSolde($interets);
-            $message = 'Le compte à intérets à taux '. $this->getTaux()*100 . '% a été crédité de ' . $interets . ' ' . $this->getDevise() ;
+            $message = 'Le compte à intérets à taux '. $this->getTaux()*100 . '% a été crédité de ' . $interets . ' ' . $this->getDevise() .'.';
         }
         return $message;
+    }
+
+    public function ficheCompte(): string
+    {
+        $ficheCompte = parent::ficheCompte();
+        $ficheCompte .= '<div class="my-2">Taux d\'intérêt : <b>'.$this->getTaux().'</b></div>';
+        return $ficheCompte;
     }
 }

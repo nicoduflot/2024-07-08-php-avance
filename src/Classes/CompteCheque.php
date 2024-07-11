@@ -66,7 +66,12 @@ class CompteCheque extends Compte{
         }
     }
 
-
+    public function ficheCompte(): string
+    {
+        $ficheCompte = parent::ficheCompte();
+        $ficheCompte .= '<div class="my-2">Numéro de carte : <b>'.$this->getCarte()->getNumcarte().'</b></div>';
+        return $ficheCompte;
+    }
 
 
 }

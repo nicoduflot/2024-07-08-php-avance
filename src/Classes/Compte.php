@@ -286,14 +286,30 @@ class Compte{
         $etatSolde = ( $this->getSolde() < 0 )? 'débiteur':'créditeur';
         $ficheCompte = '
         <div>
-            <div class="my-2"><b>'.$this->typeCompte().'</b></div>
-            <div class="my-2"><b>'.$this->getNom(). ' '. $this->getPrenom() .'</b></div>
-            <div class="my-2">Agence n°<b>'.$this->getNumagence().'</b></div>
-            <div class="my-2">RIB : <b>'.$this->getRib().'</b></div>
-            <div class="my-2">IBAN : <b>'.$this->getIban().'</b></div>
-            <div class="my-2">Compte : '. $etatSolde .' <b>' .$this->getSolde(). ' ' . $this->getDevise() . '</b></div>
-        </div>
-        ';
+        <div class="my-2"><b>'.$this->typeCompte().'</b></div>
+        <div class="my-2"><b>'.$this->getNom(). ' '. $this->getPrenom() .'</b></div>
+        <div class="my-2">Agence n°<b>'.$this->getNumagence().'</b></div>
+        <div class="my-2">RIB : <b>'.$this->getRib().'</b></div>
+        <div class="my-2">IBAN : <b>'.$this->getIban().'</b></div>
+        <div class="my-2">Compte : '. $etatSolde .' <b>' .$this->getSolde(). ' ' . $this->getDevise() . '</b></div>';
+        $ficheCompte .='</div>';
+        return $ficheCompte;
+    }
+
+    /**
+     * @return string
+     */
+    public function ficheCompte() : string {
+        $ficheCompte = '';
+        /* on utilise un ternaire pour définir l'état du solde créditeur ou débiteur */
+        $etatSolde = ( $this->getSolde() < 0 )? 'débiteur':'créditeur';
+        $ficheCompte = '
+        <div class="my-2"><b>'.$this->typeCompte().'</b></div>
+        <div class="my-2"><b>'.$this->getNom(). ' '. $this->getPrenom() .'</b></div>
+        <div class="my-2">Agence n°<b>'.$this->getNumagence().'</b></div>
+        <div class="my-2">RIB : <b>'.$this->getRib().'</b></div>
+        <div class="my-2">IBAN : <b>'.$this->getIban().'</b></div>
+        <div class="my-2">Compte : '. $etatSolde .' <b>' .$this->getSolde(). ' ' . $this->getDevise() . '</b></div>';
         return $ficheCompte;
     }
 }
