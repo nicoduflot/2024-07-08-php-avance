@@ -50,7 +50,7 @@ class Tools implements Config_interface{
      * @param array $params
      * @return mixed
      */
-    public static function modBdd($sql, $params) : mixed{
+    public static function modBdd($sql, $params = []) : mixed{
         $bdd = self::setBdd();
         $req = $bdd->prepare($sql);
         $req->execute($params);

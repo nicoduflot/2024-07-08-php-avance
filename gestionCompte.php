@@ -25,7 +25,7 @@ use Utils\Tools;
         <section class="row">
             <article class="col-lg-8 offset-lg-2">
                 <header>
-                    <h2>Gestion d'un compte d'un compte</h2>
+                    <h2>Gestion d'un compte Compte</h2>
                 </header>
                             <table class="table">
                                             <thead>

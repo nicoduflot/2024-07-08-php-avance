@@ -1,5 +1,6 @@
 <?php
 namespace App;
+use Utils\Tools;
 
 class Compte{
     /* Attributs en privé */
@@ -13,6 +14,7 @@ class Compte{
     private $devise;
     protected $decouvert;
     protected $toto;
+    private $uniqueid;
     
     /* 
     pour pouvoir utiliser la classe, créer une instance de la classe, il faut contruire l'objet 
@@ -31,6 +33,7 @@ class Compte{
      * @param float  $solde - 
      * @param string $devise - 
      * @param float  $decouvert - 
+     * @param string $uniqueid - 
      */
     public function __construct(
         $nom,
@@ -41,7 +44,8 @@ class Compte{
         $iban,
         $solde = 0,
         $decouvert = 0,
-        $devise = '€'
+        $devise = '€',
+        $uniqueid = null
         ){
         /* $this : dans cet objet que je crée */
         /* -> je cherche l'attribut ou la méthode nommé  */
@@ -57,6 +61,7 @@ class Compte{
         $this->decouvert = $decouvert;
         $this->devise = $devise;
         $this->toto = 'toto';
+        $this->uniqueid = $uniqueid;
     }
 
     /* getters et setters */
@@ -77,7 +82,6 @@ class Compte{
     public function setNom($nom)
     {
         $this->nom = $nom;
-
         return $this;
     }
 
@@ -97,7 +101,6 @@ class Compte{
     public function setPrenom($prenom)
     {
         $this->prenom = $prenom;
-
         return $this;
     }
 
@@ -117,7 +120,6 @@ class Compte{
     public function setNumcompte($numcompte)
     {
         $this->numcompte = $numcompte;
-
         return $this;
     }
 
@@ -137,7 +139,6 @@ class Compte{
     public function setNumagence($numagence)
     {
         $this->numagence = $numagence;
-
         return $this;
     }
 
@@ -157,7 +158,6 @@ class Compte{
     public function setRib($rib)
     {
         $this->rib = $rib;
-
         return $this;
     }
 
@@ -177,7 +177,6 @@ class Compte{
     public function setIban($iban)
     {
         $this->iban = $iban;
-
         return $this;
     }
 
@@ -197,7 +196,6 @@ class Compte{
     public function setSolde($solde)
     {
         $this->solde = $solde;
-
         return $this;
     }
 
@@ -217,7 +215,6 @@ class Compte{
     public function setDevise($devise)
     {
         $this->devise = $devise;
-
         return $this;
     }
 
@@ -237,14 +234,20 @@ class Compte{
     public function setDecouvert($decouvert)
     {
         $this->decouvert = $decouvert;
-
         return $this;
     }
 
     /* les méthodes propres à tous les type de compte */
     public function modifierSolde($montant){
-        //$this->solde = $this->solde + $montant;
         $this->setSolde($this->getSolde() + $montant);
+    }
+
+    /**
+     * Get the value of uniqueid
+     */ 
+    public function getUniqueid()
+    {
+        return $this->uniqueid;
     }
 
     /**
@@ -311,5 +314,34 @@ class Compte{
         <div class="my-2">IBAN : <b>'.$this->getIban().'</b></div>
         <div class="my-2">Compte : '. $etatSolde .' <b>' .$this->getSolde(). ' ' . $this->getDevise() . '</b></div>';
         return $ficheCompte;
+    }
+
+    public function insertCompte(){
+        $params = [
+            'uniqueid' => 'CPT-'.time(),
+            'typecompte' => $this->typeCompte(),
+            'nom' => $this->nom,
+            'prenom' => $this->prenom,
+            'numcompte' => $this->numcompte,
+            'numagence' => $this->numagence,
+            'rib' => $this->rib,
+            'iban' => $this->iban,
+            'solde' => $this->solde,
+            'devise' => $this->devise
+        ];
+
+        $sql = '
+        INSERT INTO `compte` (
+            `uniqueid`, `typecompte`, `nom`,
+            `prenom`, `numcompte`, `numagence`,
+            `rib`, `iban`, `solde`,
+            `devise`
+        ) VALUES  (
+            :uniqueid, :typecompte, :nom, 
+            :prenom, :numcompte, :numagence,
+            :rib, :iban, :solde,
+            :devise
+        );';
+        Tools::modBdd($sql, $params);
     }
 }
