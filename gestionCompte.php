@@ -33,6 +33,11 @@ use Utils\Tools;
                     <h2>Gestion d'un compte Compte</h2>
                 </header>
                 <?php
+
+                    /* faire la modification */
+
+                    /* faire la suppression */
+
                 /* on vient du lien "affichage du compte" */
                 if( isset($_GET['action']) && isset($_GET['uniqueid']) && $_GET['uniqueid'] !== '' ){
                     switch($_GET['action']){
@@ -139,12 +144,12 @@ use Utils\Tools;
                             break;
                         case 'edit':
                             $compte = unserialize($_SESSION['compte']);
-                            tools::prePrint($compte);
+                            //tools::prePrint($compte);
                             ?>
                             <form method="post" action="./gestionCompte.php">
-                                <input type="hidden" name="uniqueid" id="uniqueid" value="" />
+                                <input type="hidden" name="uniqueid" id="uniqueid" value="<?php echo $_GET['uniqueid'] ?>" />
                                 <input type="hidden" name="action" id="action" value="edit" />
-                                <input type="hidden" name="devise" id="devise" value="" />
+                                <input type="hidden" name="devise" id="devise" value="<?php echo $compte->getDevise() ?>" />
                                 <fieldset class="form-control my-2">
                                     <legend>
                                         Détenteur du compte
@@ -152,11 +157,11 @@ use Utils\Tools;
                                     <div class="row my-2">
                                         <div class="col-lg-6">
                                             <label for="nom">Nom</label>
-                                            <input type="text" class="form-control" name="nom" id="nom" value="" />
+                                            <input type="text" class="form-control" name="nom" id="nom" value="<?php echo $compte->getNom() ?>" />
                                         </div>
                                         <div class="col-lg-6">
                                             <label for="prenom">Prénom</label>
-                                            <input type="text" class="form-control" name="prenom" id="nom" value="" />
+                                            <input type="text" class="form-control" name="prenom" id="nom" value="<?php echo $compte->getPrenom() ?>" />
                                         </div>
                                     </div>
                                 </fieldset>
@@ -167,7 +172,7 @@ use Utils\Tools;
                                             <label for="numagence">Numéro d'agence</label>
                                         </div>
                                         <div class="col-lg-6">
-                                            <input type="text" class="form-control" name="numagence" id="numagence"  value="" />
+                                            <input type="text" class="form-control" name="numagence" id="numagence"  value="<?php echo $compte->getNumagence() ?>" />
                                         </div>
                                     </div>
                                 </fieldset>
@@ -180,7 +185,7 @@ use Utils\Tools;
                                             <label for="type">Type de compte</label>
                                         </div>
                                         <div class="col-lg-6">
-                                            <input class="form-control my-2" type="text" name="type" id="type" value="" readonly />
+                                            <input class="form-control my-2" type="text" name="type" id="type" value="<?php echo $compte->typeCompte() ?>" readonly />
                                         </div>
                                     </div>
                                     <div class="row my-2">
@@ -188,7 +193,7 @@ use Utils\Tools;
                                             <label for="numcompte">Numéro de compte</label>
                                         </div>
                                         <div class="col-lg-6">
-                                            <input class="form-control my-2" type="text" name="numcompte" id="numcompte" value="" readonly />
+                                            <input class="form-control my-2" type="text" name="numcompte" id="numcompte" value="<?php echo $compte->getNumcompte() ?>" readonly />
                                         </div>
                                     </div>
                                     <div class="row my-2">
@@ -196,7 +201,7 @@ use Utils\Tools;
                                             <label for="rib">RIB</label>
                                         </div>
                                         <div class="col-lg-6">
-                                            <input class="form-control my-2" type="text" name="rib" id="rib" value="" readonly />
+                                            <input class="form-control my-2" type="text" name="rib" id="rib" value="<?php echo $compte->getRib() ?>" readonly />
                                         </div>
                                     </div>
                                     <div class="row my-2">
@@ -204,43 +209,54 @@ use Utils\Tools;
                                             <label for="iban">IBAN</label>
                                         </div>
                                         <div class="col-lg-6">
-                                            <input class="form-control my-2" type="iban" name="iban" id="type" value="" readonly />
+                                            <input class="form-control my-2" type="iban" name="iban" id="type" value="<?php echo $compte->getIban() ?>" readonly />
                                         </div>
                                     </div>
-                                            <div class="row my-2">
-                                                <div class="col-lg-6">
-                                                    <label for="numcarte">Numéro de carte</label>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <input type="text" readonly class="form-control" name="numcarte" id="numcarte"  value="" />
-                                                </div>
+                                    <?php
+                                    if($compte->typeCompte() === 'CompteCheque'){
+                                        ?>
+                                        <div class="row my-2">
+                                            <div class="col-lg-6">
+                                                <label for="numcarte">Numéro de carte</label>
                                             </div>
-                                            <div class="row my-2">
-                                                <div class="col-lg-6">
-                                                    <label for="codepin">Code secret</label>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <input type="text" readonly class="form-control" name="codepin" id="codepin" value="" />
-                                                </div>
-                                            </div><div class="row my-2">
-                                                <div class="col-lg-6">
-                                                    <label for="taux">Taux d'intérêts</label>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <select class="form-select" name="taux" id="taux">
-                                                        <option>Choisir le taux d'intéret</option>
-                                                        <option value="0.015">1.5%</option>
-                                                        <option value="0.03">3%</option>
-                                                        <option value="0.05">5%</option>
-                                                    </select>
-                                                </div>
+                                            <div class="col-lg-6">
+                                                <input type="text" readonly class="form-control" name="numcarte" id="numcarte"  value="<?php echo $compte->getCarte()->getNumCarte(); ?>" />
                                             </div>
+                                        </div>
+                                        <div class="row my-2">
+                                            <div class="col-lg-6">
+                                                <label for="codepin">Code secret</label>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <input type="text" readonly class="form-control" name="codepin" id="codepin" value="<?php echo $compte->getCarte()->getCodepin(); ?>" />
+                                            </div>
+                                        </div>
+                                        <?php
+                                    }
+                                    if($compte->typeCompte() === 'CompteInteret'){
+                                        ?>
+                                        <div class="row my-2">
+                                            <div class="col-lg-6">
+                                                <label for="taux">Taux d'intérêts</label>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <select class="form-select" name="taux" id="taux">
+                                                    <option>Choisir le taux d'intéret</option>
+                                                    <option <?php echo ($compte->getTaux() === 0.015)? 'selected': '' ?> value="0.015">1.5%</option>
+                                                    <option <?php echo ($compte->getTaux() === 0.03)?  'selected': '' ?> value="0.03">3%</option>
+                                                    <option <?php echo ($compte->getTaux() === 0.05)?  'selected': '' ?> value="0.05">5%</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <?php
+                                    }
+                                    ?>
                                     <div class="row my-2">
                                         <div class="col-lg-6">
                                             <label for="solde">Solde</label>
                                         </div>
                                         <div class="col-lg-6">
-                                            <input type="number" class="form-control" name="solde" id="solde"   value="" />
+                                            <input type="number" class="form-control" name="solde" id="solde"   value="<?php echo $compte->getSolde() ?>" />
                                         </div>
                                     </div>
                                 </fieldset>
@@ -257,15 +273,16 @@ use Utils\Tools;
                             <?php
                             break;
                         case 'supp':
+                            $compte = unserialize($_SESSION['compte']);
                             ?>
                             <form method="post" action="./gestionCompte.php">
-                                <input type="hidden" name="uniqueid" id="uniqueid" value="" />
+                                <input type="hidden" name="uniqueid" id="uniqueid" value="<?php echo $_GET['uniqueid'] ?>" />
                                 <input type="hidden" name="action" id="action" value="supp" />
                                 <p>
                                 <button class="btn btn-outline-success btn-small" type="submit">
                                         Valider la suppression
                                     </button>
-                                    <a href="./gestionCompte.php?action=show&uniqueid="><button class="btn btn-outline-secondary btn-small" type="button">Annuler</button></a>
+                                    <a href="./gestionCompte.php?action=show&uniqueid=<?php echo $_GET['uniqueid'] ?>"><button class="btn btn-outline-secondary btn-small" type="button">Annuler</button></a>
                                 </p>
                             </form>
                             <?php
