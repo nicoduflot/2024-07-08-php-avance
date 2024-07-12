@@ -53,95 +53,58 @@ use Utils\Tools;
                             }
                             ?>
                             <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>Nom</th>
-                                                <th>Prénom</th>
-                                                <th colspan="2">Numéro de compte</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td><?php echo $compte->getNom() ?></td>
-                                                <td><?php echo $compte->getPrenom() ?></td>
-                                                <td colspan="2"><?php echo $compte->getNumcompte() ?></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Numéro d'agence</th>
-                                                <th>RIB</th>
-                                                <th>IBAN</th>
-                                                <th>Solde</th>
-                                            </tr>
-                                            <tr>
-                                                <td><?php echo $compte->getNumagence() ?></td>
-                                                <td><?php echo $compte->getRib() ?></td>
-                                                <td><?php echo $compte->getIban() ?></td>
-                                                <td><?php echo $compte->getSolde() . ' ' . $compte->getDevise() ?></td>
-                                            </tr>
-                                        </tbody>
-                                        <thead>
-                                            <tr>
-                                                <th>Nom</th>
-                                                <th>Prénom</th>
-                                                <th colspan="2">Numéro de compte</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td><?php echo $compte->getNom() ?></td>
-                                                <td><?php echo $compte->getPrenom() ?></td>
-                                                <td colspan="2"><?php echo $compte->getNumcompte() ?></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Numéro d'agence</th>
-                                                <th>RIB</th>
-                                                <th>IBAN</th>
-                                                <th>Solde</th>
-                                            </tr>
-                                            <tr>
-                                                <td><?php echo $compte->getNumagence() ?></td>
-                                                <td><?php echo $compte->getRib() ?></td>
-                                                <td><?php echo $compte->getIban() ?></td>
-                                                <td><?php echo $compte->getSolde() . ' ' . $compte->getDevise() ?></td>
-                                            </tr>
-                                            <tr>
-                                                <th colspan="2">Numéro de carte</th>
-                                                <th colspan="2">Code Pin</th>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2"><?php echo $compte->getCarte()->getNumcarte() ?></td>
-                                                <td colspan="2"><?php echo $compte->getCarte()->getCodepin() ?></td>
-                                            </tr>
-                                        </tbody>
-                                        <thead>
-                                            <tr>
-                                                <th>Nom</th>
-                                                <th>Prénom</th>
-                                                <th>Numéro de compte</th>
-                                                <th>Numéro d'agence</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td><?php echo $compte->getNom() ?></td>
-                                                <td><?php echo $compte->getPrenom() ?></td>
-                                                <td><?php echo $compte->getNumcompte() ?></td>
-                                                <td><?php echo $compte->getNumagence() ?></td>
-                                            </tr>
-                                            <tr>
-
-                                                <th>RIB</th>
-                                                <th>IBAN</th>
-                                                <th>Solde</th>
-                                                <th>Taux d'intérêt</th>
-                                            </tr>
-                                            <tr>
-                                                <td><?php echo $compte->getRib() ?></td>
-                                                <td><?php echo $compte->getIban() ?></td>
-                                                <td><?php echo $compte->getSolde() . ' ' . $compte->getDevise() ?></td>
-                                                <td><?php echo $compte->getTaux() ?></td>
-                                            </tr>
-                                        </tbody>
+                                <thead>
+                                    <tr>
+                                        <th>Nom</th>
+                                        <th>Prénom</th>
+                                        <th colspan="2">Numéro de compte</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><?php echo $compte->getNom() ?></td>
+                                        <td><?php echo $compte->getPrenom() ?></td>
+                                        <td colspan="2"><?php echo $compte->getNumcompte() ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Numéro d'agence</th>
+                                        <th>RIB</th>
+                                        <th>IBAN</th>
+                                        <th>Solde</th>
+                                    </tr>
+                                    <tr>
+                                        <td><?php echo $compte->getNumagence() ?></td>
+                                        <td><?php echo $compte->getRib() ?></td>
+                                        <td><?php echo $compte->getIban() ?></td>
+                                        <td><?php echo $compte->getSolde() . ' ' . $compte->getDevise() ?></td>
+                                    </tr>
+                                    <?php
+                                    switch($data['typecompte']){
+                                        case 'CompteCheque':
+                                        ?>
+                                        <tr>
+                                            <th colspan="2">Numéro de carte</th>
+                                            <th colspan="2">Code Pin</th>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2"><?php echo $compte->getCarte()->getNumcarte() ?></td>
+                                            <td colspan="2"><?php echo $compte->getCarte()->getCodepin() ?></td>
+                                        </tr>
+                                        <?php
+                                        break;
+                                        case 'CompteInteret':
+                                        ?>
+                                        <tr>
+                                            <th>Taux d'intérêt</th>
+                                        </tr>
+                                        <tr>
+                                            <td><?php echo $compte->getTaux() ?></td>
+                                        </tr>
+                                        <?php 
+                                        break;
+                                    }
+                                    ?>
+                                </tbody>
                             </table>
                             <?php
                             break;
