@@ -1,6 +1,7 @@
 <?php
 require_once './vendor/autoload.php';
 
+use App\Compte;
 use Utils\Tools;
 ?>
 <!DOCTYPE html>
@@ -30,17 +31,38 @@ use Utils\Tools;
                 </header>
                 <?php
                 if (isset($_POST['type'])) {
-                    /* traitement des enristrement de comptes */
-                ?>
+                    /* traitement des enregistrement de comptes */
+                    $typecompte = $_POST['type'];
+                    $nom = $_POST['nom'];
+                    $prenom = $_POST['prenom'];
+                    $date = new DateTimeImmutable();
+                    $numcompte = $date->format('Y-m-d') . '-' . time();
+                    $numagence = $_POST['numagence'];
+                    $rib = 'RIB - '. $numagence . ' - ' . $numcompte;
+                    $iban = 'IBAN - '.$numagence . ' - ' . $numcompte . ' FR';
+                    $solde = $_POST['solde'];
+                    $devise = '€';
+                    switch($typecompte){
+                        case 'Compte':
+                            $compte = new Compte($nom, $prenom, $numcompte, $numagence, $rib, $iban, $solde, $devise);
+                            break;
+                        case 'CompteCheque':
+                            $compte = new Compte($nom, $prenom, $numcompte, $numagence, $rib, $iban, $solde, $devise);
+                            break;
+                        case 'CompteInteret':
+                            $compte = new Compte($nom, $prenom, $numcompte, $numagence, $rib, $iban, $solde, $devise);
+                            break;
+                    }
+                    $compte->insertCompte();
+                    ?>
                     <h3>Le compte suivant a été enregistré : </h3>
-                    <p>
                         <?php
+                        echo $compte->ficheCompte();
                         ?>
-                    </p>
                     <p>
                         <a href="./classesetpdo.php"><button class="btn btn-outline-secondary btn-small" type="button">Retour à la page des comptes</button></a>
                     </p>
-                <?php
+                    <?php
                 } else {
                     $typeCompte = (isset($_GET['typecompte'])) ? $_GET['typecompte'] : null;
                 ?>
