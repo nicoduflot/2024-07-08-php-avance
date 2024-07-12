@@ -14,7 +14,7 @@ class Compte{
     protected $devise;
     protected $decouvert;
     protected $toto;
-    private $uniqueid;
+    protected $uniqueid;
     
     /* 
     pour pouvoir utiliser la classe, créer une instance de la classe, il faut contruire l'objet 

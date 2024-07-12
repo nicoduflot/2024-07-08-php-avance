@@ -1,7 +1,10 @@
 <?php
 require_once './vendor/autoload.php';
+session_start();
 
 use App\Compte;
+use App\CompteCheque;
+use App\CompteInteret;
 use Utils\Tools;
 ?>
 <!DOCTYPE html>
@@ -37,20 +40,46 @@ use Utils\Tools;
                             /* on récupère uniqueid */
                             $idcompte = $_GET['uniqueid'];
                             $sql = '
-                            SELECT * FROM `compte` WHERE `uniqueid` = :uniqueid;
+                            SELECT 
+                                * 
+                            FROM 
+                                `compte` LEFT JOIN 
+                                `carte` ON `compte`.`cardid` = `carte`.`id`
+                            WHERE 
+                                `uniqueid` = :uniqueid;
                             ';
                             $params = ['uniqueid' => $idcompte];
                             $request = Tools::modBdd($sql, $params);
                             $data = $request->fetch(PDO::FETCH_ASSOC);
                             switch($data['typecompte']){
                                 case 'Compte': 
-                                    $compte = new Compte($data['nom'], $data['prenom'], $data['numcompte'], $data['numagence'], $data['rib'], $data['iban'], $data['solde'], $data['decouvert'], $data['devise'], $data['uniqueid']);
+                                    $compte = new Compte(
+                                        $data['nom'], $data['prenom'], 
+                                        $data['numcompte'], $data['numagence'], 
+                                        $data['rib'], $data['iban'], 
+                                        $data['solde'], $data['decouvert'], 
+                                        $data['devise'], $data['uniqueid']);
                                     break;
                                 case 'CompteCheque':
+                                    $compte = new CompteCheque(
+                                        $data['nom'], $data['prenom'], 
+                                        $data['numcompte'], $data['numagence'], 
+                                        $data['rib'], $data['iban'], 
+                                        $data['cardnumber'], $data['codepin'], 
+                                        $data['solde'], $data['decouvert'], 
+                                        $data['devise'], $data['uniqueid']);
                                     break;
                                 case 'CompteInteret':
+                                    $compte = new CompteInteret(
+                                        $data['nom'], $data['prenom'], 
+                                        $data['numcompte'], $data['numagence'], 
+                                        $data['rib'], $data['iban'], 
+                                        $data['solde'], $data['taux'], 
+                                        $data['decouvert'], $data['devise'], 
+                                        $data['uniqueid']);
                                     break;
                             }
+                            $_SESSION['compte'] = serialize($compte);
                             ?>
                             <table class="table">
                                 <thead>
@@ -109,6 +138,8 @@ use Utils\Tools;
                             <?php
                             break;
                         case 'edit':
+                            $compte = unserialize($_SESSION['compte']);
+                            tools::prePrint($compte);
                             ?>
                             <form method="post" action="./gestionCompte.php">
                                 <input type="hidden" name="uniqueid" id="uniqueid" value="" />
@@ -244,9 +275,9 @@ use Utils\Tools;
                     ?>
                     <p>
                         <a href="./classesetpdo.php" title="Retour à la liste des compte"><button class="btn btn-secondary btn-small"><i class="bi bi-list"></i></button></a>
-                        <a href="./gestionCompte.php?action=show&uniqueid=" title="Voir le compte"><button class="btn btn-success btn-small"><i class="bi bi-card-text"></i></button></a>
-                        <a href="./gestionCompte.php?action=edit&uniqueid=" title="Éditer le compte"><button class="btn btn-secondary btn-small"><i class="bi bi-pencil-fill"></i></button></a>
-                        <a href="./gestionCompte.php?action=supp&uniqueid=" title="Supprimer le compte"><button class="btn btn-danger btn-small"><i class="bi bi-trash-fill"></i></button></a>
+                        <a href="./gestionCompte.php?action=show&uniqueid=<?php echo $_GET['uniqueid'] ?>" title="Voir le compte"><button class="btn btn-success btn-small"><i class="bi bi-card-text"></i></button></a>
+                        <a href="./gestionCompte.php?action=edit&uniqueid=<?php echo $_GET['uniqueid'] ?>" title="Éditer le compte"><button class="btn btn-secondary btn-small"><i class="bi bi-pencil-fill"></i></button></a>
+                        <a href="./gestionCompte.php?action=supp&uniqueid=<?php echo $_GET['uniqueid'] ?>" title="Supprimer le compte"><button class="btn btn-danger btn-small"><i class="bi bi-trash-fill"></i></button></a>
                     </p>
             </article>
             <?php
