@@ -103,7 +103,8 @@ class CompteCheque extends Compte{
             'iban' => $this->iban,
             'solde' => $this->solde,
             'devise' => $this->devise,
-            'cardid' => $cardid
+            'cardid' => $cardid,
+            'decouvert' => $this->decouvert
         ];
 
         $sql = '
@@ -111,12 +112,12 @@ class CompteCheque extends Compte{
             `uniqueid`, `typecompte`, `nom`,
             `prenom`, `numcompte`, `numagence`,
             `rib`, `iban`, `solde`,
-            `devise`, `cardid`
+            `devise`, `cardid`, `decouvert`
         ) VALUES  (
             :uniqueid, :typecompte, :nom, 
             :prenom, :numcompte, :numagence,
             :rib, :iban, :solde,
-            :devise, :cardid
+            :devise, :cardid, :decouvert
         );';
         Tools::modBdd($sql, $params);
     }

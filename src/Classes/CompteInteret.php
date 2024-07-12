@@ -30,11 +30,6 @@ class CompteInteret extends Compte
     public function setTaux($taux)
     {
         if (!is_float($taux) || $taux <= 0) {
-            /*trigger_error('
-            Le taux d\'intérêt ne peut être une chaîne de caractère ou inférieur ou égal à 0.<br />
-            Le taux par défaut de 3% sera appliqué au compte
-            ', E_USER_WARNING);
-            */
             echo '
             <div class="alert alert-warning alert-dismissible fade show">
                 Le taux d\'intérêt ne peut être une chaîne de caractère ou inférieur ou égal à 0.<br />
@@ -79,7 +74,8 @@ class CompteInteret extends Compte
             'iban' => $this->iban,
             'solde' => $this->solde,
             'devise' => $this->devise,
-            'taux' => $this->taux
+            'taux' => $this->taux,
+            'decouvert' => $this->decouvert
         ];
 
         $sql = '
@@ -87,12 +83,12 @@ class CompteInteret extends Compte
             `uniqueid`, `typecompte`, `nom`,
             `prenom`, `numcompte`, `numagence`,
             `rib`, `iban`, `solde`,
-            `devise`, `taux`
+            `devise`, `taux`, `decouvert`
         ) VALUES  (
             :uniqueid, :typecompte, :nom, 
             :prenom, :numcompte, :numagence,
             :rib, :iban, :solde,
-            :devise, :taux
+            :devise, :taux, :decouvert
         );';
         Tools::modBdd($sql, $params);
     }

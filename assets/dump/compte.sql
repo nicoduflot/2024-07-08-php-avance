@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : jeu. 11 juil. 2024 à 14:52
+-- Généré le : ven. 12 juil. 2024 à 13:18
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.2.0
 
@@ -42,14 +42,11 @@ CREATE TABLE IF NOT EXISTS `compte` (
   `devise` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `cardid` int DEFAULT NULL,
   `taux` float DEFAULT NULL,
+  `decouvert` float DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniqueid` (`uniqueid`),
   KEY `cardid` (`cardid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Contraintes pour les tables déchargées
---
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Contraintes pour la table `compte`

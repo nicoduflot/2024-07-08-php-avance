@@ -43,18 +43,20 @@ use Utils\Tools;
                     $rib = 'RIB - '. $numagence . ' - ' . $numcompte;
                     $iban = 'IBAN - '.$numagence . ' - ' . $numcompte . ' FR';
                     $solde = $_POST['solde'];
+                    $decouvert = $_POST['decouvert'];
                     $devise = '€';
                     switch($typecompte){
                         case 'Compte':
-                            $compte = new Compte($nom, $prenom, $numcompte, $numagence, $rib, $iban, $solde, $devise);
+                            $compte = new Compte($nom, $prenom, $numcompte, $numagence, $rib, $iban, $solde, $decouvert, $devise);
                             break;
                         case 'CompteCheque':
-                            $compte = new CompteCheque($nom, $prenom, $numcompte, $numagence, $rib, $iban, $_POST['numcarte'], $_POST['codepin'], $solde, $devise);
+                            $compte = new CompteCheque($nom, $prenom, $numcompte, $numagence, $rib, $iban, $_POST['numcarte'], $_POST['codepin'], $solde, $decouvert, $devise);
                             break;
                         case 'CompteInteret':
-                            echo 'taux : '. $_POST['taux'] .'<br />';
-                            $taux = ($_POST['taux'] === '')? 0.03 : $_POST['taux'];
-                            $compte = new CompteInteret($nom, $prenom, $numcompte, $numagence, $rib, $iban, $solde, $taux, $devise);
+                            echo 'taux : '. floatval($_POST['taux']) .'<br />';
+                            $taux = floatval($_POST['taux']);
+                            echo $taux;
+                            $compte = new CompteInteret($nom, $prenom, $numcompte, $numagence, $rib, $iban, $solde,$taux, $decouvert, $devise);
                             break;
                     }
                     $compte->insertCompte();
@@ -113,11 +115,29 @@ use Utils\Tools;
                             <?php
                             switch ($typeCompte) {
                                 case 'Compte':
+                                    ?>
+                                    <div class="row my-2">
+                                        <div class="col-lg-6">
+                                            <label for="numcarte">Découvert autorisé</label>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input type="text" class="form-control" name="decouvert" id="decouvert" value="0" />
+                                        </div>
+                                    </div>
+                                    <?php
                                     break;
                                 case 'CompteCheque':
                                     $numcarte = CompteCheque::generateCardNumber();
                                     $codepin = CompteCheque::generatePin();
-                            ?>
+                                    ?>
+                                    <div class="row my-2">
+                                        <div class="col-lg-6">
+                                            <label for="numcarte">Découvert autorisé</label>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input type="text" class="form-control" name="decouvert" id="decouvert" value="0" />
+                                        </div>
+                                    </div>
                                     <div class="row my-2">
                                         <div class="col-lg-6">
                                             <label for="numcarte">Numéro de carte</label>
@@ -137,7 +157,15 @@ use Utils\Tools;
                                 <?php
                                     break;
                                 case 'CompteInteret':
-                                ?>
+                                    ?>
+                                    <div class="row my-2">
+                                        <div class="col-lg-6">
+                                            <label for="numcarte">Découvert autorisé</label>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input type="text" readonly class="form-control" name="decouvert" id="decouvert" value="0" />
+                                        </div>
+                                    </div>
                                     <div class="row my-2">
                                         <div class="col-lg-6">
                                             <label for="taux">Taux d'intérêts</label>
@@ -146,8 +174,8 @@ use Utils\Tools;
                                             <select class="form-select" name="taux" id="taux">
                                                 <option value="" selected>Choisir le taux d'intéret</option>
                                                 <option value="0.015">1.5%</option>
-                                                <option value="0.03">3%</option>
-                                                <option value="0.05">5%</option>
+                                                <option value="0.030">3%</option>
+                                                <option value="0.050">5%</option>
                                             </select>
                                         </div>
                                     </div>

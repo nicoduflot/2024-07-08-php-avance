@@ -327,7 +327,8 @@ class Compte{
             'rib' => $this->rib,
             'iban' => $this->iban,
             'solde' => $this->solde,
-            'devise' => $this->devise
+            'devise' => $this->devise,
+            'decouvert' => $this->decouvert
         ];
 
         $sql = '
@@ -335,12 +336,12 @@ class Compte{
             `uniqueid`, `typecompte`, `nom`,
             `prenom`, `numcompte`, `numagence`,
             `rib`, `iban`, `solde`,
-            `devise`
+            `devise`, `decouvert`
         ) VALUES  (
             :uniqueid, :typecompte, :nom, 
             :prenom, :numcompte, :numagence,
             :rib, :iban, :solde,
-            :devise
+            :devise, :decouvert
         );';
         Tools::modBdd($sql, $params);
     }

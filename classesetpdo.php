@@ -61,6 +61,7 @@ use Utils\Tools;
                                 <th>RIB</th>
                                 <th>IBAN</th>
                                 <th>Solde</th>
+                                <th>Découvert autorisé</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -76,6 +77,7 @@ use Utils\Tools;
                                     <td><?php echo $compte['rib'] ?></td>
                                     <td><?php echo $compte['iban'] ?></td>
                                     <td><?php echo $compte['solde'] . ' ' . $compte['devise'] ?></td>
+                                    <td><?php echo $compte['decouvert'] ?></td>
                                     <td>
                                         <a href="./gestionCompte.php?action=show&uniqueid=<?php echo $compte['uniqueid'] ?>" title="Voir le compte"><button class="btn btn-primary btn-small"><i class="bi bi-card-text"></i></button></a>
                                     </td>
@@ -118,6 +120,7 @@ use Utils\Tools;
                                 <th>RIB</th>
                                 <th>IBAN</th>
                                 <th>Solde</th>
+                                <th>Découvert autorisé</th>
                                 <th>Numéro de carte</th>
                                 <th>Code Pin</th>
                                 <th>Actions</th>
@@ -135,6 +138,7 @@ use Utils\Tools;
                                     <td><?php echo $compte['rib'] ?></td>
                                     <td><?php echo $compte['iban'] ?></td>
                                     <td><?php echo $compte['solde'] ?></td>
+                                    <td><?php echo $compte['decouvert'] ?></td>
                                     <td><?php echo $compte['cardnumber'] ?></td>
                                     <td><?php echo $compte['codepin'] ?></td>
                                     <td>
