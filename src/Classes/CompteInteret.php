@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-
+use Utils\Tools;
 class CompteInteret extends Compte
 {
     /* Attributs */
@@ -65,5 +65,35 @@ class CompteInteret extends Compte
         $ficheCompte = parent::ficheCompte();
         $ficheCompte .= '<div class="my-2">Taux d\'intérêt : <b>'.$this->getTaux().'</b></div>';
         return $ficheCompte;
+    }
+
+    public function insertCompte(){
+        $params = [
+            'uniqueid' => 'CPT-'.time(),
+            'typecompte' => $this->typeCompte(),
+            'nom' => $this->nom,
+            'prenom' => $this->prenom,
+            'numcompte' => $this->numcompte,
+            'numagence' => $this->numagence,
+            'rib' => $this->rib,
+            'iban' => $this->iban,
+            'solde' => $this->solde,
+            'devise' => $this->devise,
+            'taux' => $this->taux
+        ];
+
+        $sql = '
+        INSERT INTO `compte` (
+            `uniqueid`, `typecompte`, `nom`,
+            `prenom`, `numcompte`, `numagence`,
+            `rib`, `iban`, `solde`,
+            `devise`, `taux`
+        ) VALUES  (
+            :uniqueid, :typecompte, :nom, 
+            :prenom, :numcompte, :numagence,
+            :rib, :iban, :solde,
+            :devise, :taux
+        );';
+        Tools::modBdd($sql, $params);
     }
 }

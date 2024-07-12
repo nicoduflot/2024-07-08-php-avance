@@ -3,6 +3,7 @@ require_once './vendor/autoload.php';
 
 use App\Compte;
 use App\CompteCheque;
+use App\CompteInteret;
 use Utils\Tools;
 ?>
 <!DOCTYPE html>
@@ -51,7 +52,9 @@ use Utils\Tools;
                             $compte = new CompteCheque($nom, $prenom, $numcompte, $numagence, $rib, $iban, $_POST['numcarte'], $_POST['codepin'], $solde, $devise);
                             break;
                         case 'CompteInteret':
-                            $compte = new Compte($nom, $prenom, $numcompte, $numagence, $rib, $iban, $solde, $devise);
+                            echo 'taux : '. $_POST['taux'] .'<br />';
+                            $taux = ($_POST['taux'] === '')? 0.03 : $_POST['taux'];
+                            $compte = new CompteInteret($nom, $prenom, $numcompte, $numagence, $rib, $iban, $solde, $taux, $devise);
                             break;
                     }
                     $compte->insertCompte();
@@ -141,7 +144,7 @@ use Utils\Tools;
                                         </div>
                                         <div class="col-lg-6">
                                             <select class="form-select" name="taux" id="taux">
-                                                <option selected>Choisir le taux d'intéret</option>
+                                                <option value="" selected>Choisir le taux d'intéret</option>
                                                 <option value="0.015">1.5%</option>
                                                 <option value="0.03">3%</option>
                                                 <option value="0.05">5%</option>
