@@ -1,5 +1,6 @@
 <?php
 require_once './vendor/autoload.php';
+
 use Utils\Tools;
 ?>
 <!DOCTYPE html>
@@ -50,43 +51,43 @@ use Utils\Tools;
                 $request = Tools::modBdd($sqlCompte);
                 ?>
                 <div class="table-responsive">
-                <table class="table table-dark table-striped">
-                    <thead>
-                        <tr>
-                            <th>Nom</th>
-                            <th>Prénom</th>
-                            <th>Numéro de compte</th>
-                            <th>Numéro d'agence</th>
-                            <th>RIB</th>
-                            <th>IBAN</th>
-                            <th>Solde</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <?php
-                    while($compte = $request->fetch(PDO::FETCH_ASSOC)){
-                    ?>
-                        <tr>
-                            <td><?php echo $compte['nom'] ?></td>
-                            <td><?php echo $compte['prenom'] ?></td>
-                            <td><?php echo $compte['numcompte'] ?></td>
-                            <td><?php echo $compte['numagence'] ?></td>
-                            <td><?php echo $compte['rib'] ?></td>
-                            <td><?php echo $compte['iban'] ?></td>
-                            <td><?php echo $compte['solde'] . ' ' . $compte['devise'] ?></td>
-                            <td>
-                                <a href="./gestionCompte.php?action=show&uniqueid=<?php echo $compte['uniqueid'] ?>" title="Voir le compte"><button class="btn btn-primary btn-small"><i class="bi bi-card-text"></i></button></a>
-                            </td>
-                        </tr>
-                        <?php
-                    }
+                    <table class="table table-dark table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Prénom</th>
+                                <th>Numéro de compte</th>
+                                <th>Numéro d'agence</th>
+                                <th>RIB</th>
+                                <th>IBAN</th>
+                                <th>Solde</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            while ($compte = $request->fetch(PDO::FETCH_ASSOC)) {
+                            ?>
+                                <tr>
+                                    <td><?php echo $compte['nom'] ?></td>
+                                    <td><?php echo $compte['prenom'] ?></td>
+                                    <td><?php echo $compte['numcompte'] ?></td>
+                                    <td><?php echo $compte['numagence'] ?></td>
+                                    <td><?php echo $compte['rib'] ?></td>
+                                    <td><?php echo $compte['iban'] ?></td>
+                                    <td><?php echo $compte['solde'] . ' ' . $compte['devise'] ?></td>
+                                    <td>
+                                        <a href="./gestionCompte.php?action=show&uniqueid=<?php echo $compte['uniqueid'] ?>" title="Voir le compte"><button class="btn btn-primary btn-small"><i class="bi bi-card-text"></i></button></a>
+                                    </td>
+                                </tr>
+                            <?php
+                            }
 
-                    ?>
-                    </tbody>
-                </table>
+                            ?>
+                        </tbody>
+                    </table>
                 </div>
-                
+
             </article>
             <article>
                 <header>
@@ -107,81 +108,97 @@ use Utils\Tools;
                 $request = Tools::modBdd($sqlCompte);
                 ?>
                 <div class="table-responsive">
-                <table class="table table-dark table-striped">
-                    <thead>
-                        <tr>
-                            <th>Nom</th>
-                            <th>Prénom</th>
-                            <th>Numéro de compte</th>
-                            <th>Numéro d'agence</th>
-                            <th>RIB</th>
-                            <th>IBAN</th>
-                            <th>Solde</th>
-                            <th>Numéro de carte</th>
-                            <th>Code Pin</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <?php
-                    while($compte = $request->fetch(PDO::FETCH_ASSOC)){
-                    ?>
-                        <tr>
-                            <td><?php echo $compte['nom'] ?></td>
-                            <td><?php echo $compte['prenom'] ?></td>
-                            <td><?php echo $compte['numcompte'] ?></td>
-                            <td><?php echo $compte['numagence'] ?></td>
-                            <td><?php echo $compte['rib'] ?></td>
-                            <td><?php echo $compte['iban'] ?></td>
-                            <td><?php echo $compte['solde'] ?></td>
-                            <td><?php echo $compte['cardnumber'] ?></td>
-                            <td><?php echo $compte['codepin'] ?></td>
-                            <td>
-                                <a href="./gestionCompte.php?action=show&uniqueid=<?php echo $compte['uniqueid'] ?>" title="Voir le compte"><button class="btn btn-primary btn-small"><i class="bi bi-card-text"></i></button></a>
-                            </td>
-                        </tr>
-                        <?php
-                    }
-                        ?>
-                    </tbody>
-                </table>
+                    <table class="table table-dark table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Prénom</th>
+                                <th>Numéro de compte</th>
+                                <th>Numéro d'agence</th>
+                                <th>RIB</th>
+                                <th>IBAN</th>
+                                <th>Solde</th>
+                                <th>Numéro de carte</th>
+                                <th>Code Pin</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            while ($compte = $request->fetch(PDO::FETCH_ASSOC)) {
+                            ?>
+                                <tr>
+                                    <td><?php echo $compte['nom'] ?></td>
+                                    <td><?php echo $compte['prenom'] ?></td>
+                                    <td><?php echo $compte['numcompte'] ?></td>
+                                    <td><?php echo $compte['numagence'] ?></td>
+                                    <td><?php echo $compte['rib'] ?></td>
+                                    <td><?php echo $compte['iban'] ?></td>
+                                    <td><?php echo $compte['solde'] ?></td>
+                                    <td><?php echo $compte['cardnumber'] ?></td>
+                                    <td><?php echo $compte['codepin'] ?></td>
+                                    <td>
+                                        <a href="./gestionCompte.php?action=show&uniqueid=<?php echo $compte['uniqueid'] ?>" title="Voir le compte"><button class="btn btn-primary btn-small"><i class="bi bi-card-text"></i></button></a>
+                                    </td>
+                                </tr>
+                            <?php
+                            }
+                            ?>
+                        </tbody>
+                    </table>
                 </div>
             </article>
             <article>
                 <header>
                     <h2>Les comptes intérêts enregistrés</h2>
                 </header>
+                <?php
+                $sqlCompte = '
+                    SELECT * FROM `compte` 
+                    WHERE `typecompte` = \'CompteInteret\'
+                    ORDER BY `compte`.`nom`;';
+                echo $sqlCompte;
+                $request = Tools::modBdd($sqlCompte);
+                ?>
                 <div class="table-responsive">
-                <table class="table table-dark table-striped">
-                    <thead>
-                        <tr>
-                            <th>Nom</th>
-                            <th>Prénom</th>
-                            <th>Numéro de compte</th>
-                            <th>Numéro d'agence</th>
-                            <th>RIB</th>
-                            <th>IBAN</th>
-                            <th>Solde</th>
-                            <th>Taux d'intérêt</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <a href="./gestionCompte.php?action=show&uniqueid=" title="Voir le compte"><button class="btn btn-primary btn-small"><i class="bi bi-card-text"></i></button></a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                    <table class="table table-dark table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Prénom</th>
+                                <th>Numéro de compte</th>
+                                <th>Numéro d'agence</th>
+                                <th>RIB</th>
+                                <th>IBAN</th>
+                                <th>Solde</th>
+                                <th>Taux d'intérêt</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            while ($compte = $request->fetch(PDO::FETCH_ASSOC)) {
+                            ?>
+                                <tr>
+                                    <td><?php echo $compte['nom'] ?></td>
+                                    <td><?php echo $compte['prenom'] ?></td>
+                                    <td><?php echo $compte['numcompte'] ?></td>
+                                    <td><?php echo $compte['numagence'] ?></td>
+                                    <td><?php echo $compte['rib'] ?></td>
+                                    <td><?php echo $compte['iban'] ?></td>
+                                    <td><?php echo $compte['solde'] ?></td>
+                                    <td><?php echo $compte['taux'] ?></td>
+                                    <td>
+                                        <a href="./gestionCompte.php?action=show&uniqueid=<?php echo $compte['uniqueid'] ?>" title="Voir le compte"><button class="btn btn-primary btn-small"><i class="bi bi-card-text"></i></button></a>
+                                    </td>
+                                </tr>
+
+                            <?php
+                            }
+
+                            ?>
+                        </tbody>
+                    </table>
                 </div>
             </article>
         </section>
