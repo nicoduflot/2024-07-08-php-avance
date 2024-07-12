@@ -57,5 +57,17 @@ class Tools implements Config_interface{
         return $req;
     }
 
+    /**
+     * @param string $sql
+     * @param array $params
+     * @return mixed
+     */
+    public static function insertBdd($sql, $params = []) : mixed{
+        $bdd = self::setBdd();
+        $req = $bdd->prepare($sql);
+        $req->execute($params);
+        return $bdd->lastInsertId();
+    }
+
 }
 

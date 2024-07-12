@@ -1,6 +1,6 @@
 <?php
 namespace App;
-
+use Utils\Tools;
 class Carte{
     private $numcarte;
     private $codepin;
@@ -51,5 +51,15 @@ class Carte{
     {
         $this->codepin = $codepin;
         return $this;
+    }
+
+    public function insertcard(){
+        $sql = 'INSERT INTO `carte` (`cardnumber`, `codepin`) VALUES ( :cardnumber, :codepin); ';
+        $params = [
+            'cardnumber' => $this->numcarte,
+            'codepin' => $this->codepin
+        ];
+        $id = Tools::insertBdd($sql, $params);
+        return $id;
     }
 }

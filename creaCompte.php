@@ -2,6 +2,7 @@
 require_once './vendor/autoload.php';
 
 use App\Compte;
+use App\CompteCheque;
 use Utils\Tools;
 ?>
 <!DOCTYPE html>
@@ -47,7 +48,7 @@ use Utils\Tools;
                             $compte = new Compte($nom, $prenom, $numcompte, $numagence, $rib, $iban, $solde, $devise);
                             break;
                         case 'CompteCheque':
-                            $compte = new Compte($nom, $prenom, $numcompte, $numagence, $rib, $iban, $solde, $devise);
+                            $compte = new CompteCheque($nom, $prenom, $numcompte, $numagence, $rib, $iban, $_POST['numcarte'], $_POST['codepin'], $solde, $devise);
                             break;
                         case 'CompteInteret':
                             $compte = new Compte($nom, $prenom, $numcompte, $numagence, $rib, $iban, $solde, $devise);
@@ -111,6 +112,8 @@ use Utils\Tools;
                                 case 'Compte':
                                     break;
                                 case 'CompteCheque':
+                                    $numcarte = CompteCheque::generateCardNumber();
+                                    $codepin = CompteCheque::generatePin();
                             ?>
                                     <div class="row my-2">
                                         <div class="col-lg-6">

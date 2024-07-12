@@ -4,14 +4,14 @@ use Utils\Tools;
 
 class Compte{
     /* Attributs en privé */
-    private $nom;
-    private $prenom;
-    private $numcompte;
-    private $numagence;
-    private $rib;
-    private $iban;
-    private $solde;
-    private $devise;
+    protected $nom;
+    protected $prenom;
+    protected $numcompte;
+    protected $numagence;
+    protected $rib;
+    protected $iban;
+    protected $solde;
+    protected $devise;
     protected $decouvert;
     protected $toto;
     private $uniqueid;

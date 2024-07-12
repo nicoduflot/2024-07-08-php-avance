@@ -1,5 +1,6 @@
 <?php
 namespace App;
+use Utils\Tools;
 
 class CompteCheque extends Compte{
     /* Attributs particliers du compte chèque */
@@ -71,6 +72,53 @@ class CompteCheque extends Compte{
         $ficheCompte = parent::ficheCompte();
         $ficheCompte .= '<div class="my-2">Numéro de carte : <b>'.$this->getCarte()->getNumcarte().'</b></div>';
         return $ficheCompte;
+    }
+
+    public static function generatePin() : string{
+        $pin = ''. rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9);
+        return $pin;
+    }
+
+    public static function generateCardNumber() : string
+    {
+        $numcarte = ''  . CompteCheque::generatePin() . ' ' 
+                        . CompteCheque::generatePin() . ' ' 
+                        . CompteCheque::generatePin() . ' '
+                        . CompteCheque::generatePin();
+        
+        return $numcarte;
+    }
+
+    public function insertCompte(){
+        /* avant d'enregistrer le compte en bdd, on enregistre sa carte qui se trouve dans $carte */
+        $cardid = $this->getCarte()->insertcard();
+        $params = [
+            'uniqueid' => 'CPT-'.time(),
+            'typecompte' => $this->typeCompte(),
+            'nom' => $this->nom,
+            'prenom' => $this->prenom,
+            'numcompte' => $this->numcompte,
+            'numagence' => $this->numagence,
+            'rib' => $this->rib,
+            'iban' => $this->iban,
+            'solde' => $this->solde,
+            'devise' => $this->devise,
+            'cardid' => $cardid
+        ];
+
+        $sql = '
+        INSERT INTO `compte` (
+            `uniqueid`, `typecompte`, `nom`,
+            `prenom`, `numcompte`, `numagence`,
+            `rib`, `iban`, `solde`,
+            `devise`, `cardid`
+        ) VALUES  (
+            :uniqueid, :typecompte, :nom, 
+            :prenom, :numcompte, :numagence,
+            :rib, :iban, :solde,
+            :devise, :cardid
+        );';
+        Tools::modBdd($sql, $params);
     }
 
 
